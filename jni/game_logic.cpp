@@ -7,6 +7,8 @@ void GameLogic::Initialize() {
   Vec2 p(0.5,0.5);
   Vec2 v(0.1,0);
   BulletsCont->addBullet( p, v );
+  p.x() = 0;
+  p.y() = 0;
   v.x() = 0.2;
   v.y() = -0.3;
   BulletsCont->addBullet( p, v );
@@ -16,7 +18,7 @@ void GameLogic::Initialize() {
 void GameLogic::MainGameLoop() {
   // TODO: some game stuff here
   // TODO: count real dt
-  double dt = 1.0f;
+  double dt = 0.01f;
   PEngine->UpdateGameState( dt );
 
   Graphic->RenderFrame();
