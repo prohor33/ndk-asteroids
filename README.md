@@ -1,0 +1,4 @@
+ndk-asteroids
+=============
+
+Test project
