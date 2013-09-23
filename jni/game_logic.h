@@ -4,7 +4,8 @@
 class GameLogic {
 public:
   void Initialize();
-  void MainGameLoop();
+  void DeInitialize() {};
+  void MainGameLoop(double dt);
   static GameLogic* instance() {
     static GameLogic GameLogic_;
     return &GameLogic_;

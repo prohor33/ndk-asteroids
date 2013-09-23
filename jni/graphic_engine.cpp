@@ -2,42 +2,39 @@
 #include "bullet.h"
 #include "bullets_container.h"
 #include "main.h"
-#include "gl_code.h"
 
 void GraphicEngine::RenderFrame() {
-  glClearColor( 50.0f/255.0f, 56.0f/255.0f, 73.0f/255.0f, 1.0f );
-  checkGlError("glClearColor");
-  glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-  checkGlError("glClear");
-
   DrawBullets();
   return;
 }
 
 void GraphicEngine::DrawBullets() {
-  // smth like this
+  // something like this
 
-  glUseProgram(gProgram);
-  checkGlError("glUseProgram");
+  GLfloat size = 5;
+  GLfloat vertBullet[8];
+  vertBullet[0] = -size/2;
+  vertBullet[1] = -size/2;
+  vertBullet[2] = +size/2;
+  vertBullet[3] = -size/2;
+  vertBullet[4] = +size/2;
+  vertBullet[5] = +size/2;
+  vertBullet[6] = -size/2;
+  vertBullet[7] = +size/2;
 
-  GLfloat gTriangleBulletVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
-          0.5f, -0.5f };
-  GLfloat gBulletSize = 0.05;
+  glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+  glMatrixMode(GL_PROJECTION);
+
   vector<Bullet*>::iterator cii;
   for( cii=BulletsCont->mBullets.begin(); cii!=BulletsCont->mBullets.end(); ++cii ) {
-    gTriangleBulletVertices[0] = (*cii)->getPos().x();
-    gTriangleBulletVertices[1] = (*cii)->getPos().y()+gBulletSize;
-    gTriangleBulletVertices[2] = (*cii)->getPos().x()-gBulletSize;
-    gTriangleBulletVertices[3] = (*cii)->getPos().y()-gBulletSize;
-    gTriangleBulletVertices[4] = (*cii)->getPos().x()+gBulletSize;
-    gTriangleBulletVertices[5] = (*cii)->getPos().y()-gBulletSize;
-
-    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleBulletVertices);
-    checkGlError("glVertexAttribPointer");
-    glEnableVertexAttribArray(gvPositionHandle);
-    checkGlError("glEnableVertexAttribArray");
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    checkGlError("glDrawArrays");
+    glPushMatrix();
+    glTranslatef((*cii)->getPos().x(), (*cii)->getPos().y(), 0);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(2, GL_FLOAT, 0, vertBullet);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glPopMatrix();
   }
+
   return;
 }
