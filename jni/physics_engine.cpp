@@ -22,8 +22,8 @@ void PhysicsEngine::UpdateObstacles( double dt ) {
 }
 
 void PhysicsEngine::UpdateBullets( double dt ) {
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "UpdateBullets size = %i, size2 = %i",
-      BulletsCont->getMass().size(), BulletsCont->mBullets.size());
+//  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "UpdateBullets size = %i, size2 = %i",
+//      BulletsCont->getMass().size(), BulletsCont->mBullets.size());
   vector<Bullet*>::iterator cii;
   //for( cii=BulletsCont->mBullets.begin(); cii!=BulletsCont->mBullets.end(); ++cii )
   for( cii=BulletsCont->getMass().begin(); cii!=BulletsCont->getMass().end(); ++cii )

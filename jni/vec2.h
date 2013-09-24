@@ -7,7 +7,7 @@ class Vec2
 {
     public:
 
-        Vec2() {} // no operations done to maintain speed
+        Vec2() { _v[0]=0; _v[1]=0; }
         Vec2(float x,float y) { _v[0]=x; _v[1]=y; }
 
         float _v[2];

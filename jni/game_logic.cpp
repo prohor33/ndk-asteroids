@@ -12,11 +12,12 @@ void GameLogic::Initialize() {
 //  v.x() = 2;
 //  v.y() = -3;
 //  BulletsCont->addBullet( p, v );
-  BulletsCont->addBullet( Vec2(0, 0), Vec2(1,1) );
-  BulletsCont->addBullet( Vec2(0, GLogic->getScreenSize().y()), Vec2() );
-  BulletsCont->addBullet( GLogic->getScreenSize(), Vec2() );
-  BulletsCont->addBullet( GLogic->getScreenSize()/2, Vec2() );
-  BulletsCont->addBullet( Vec2(GLogic->getScreenSize().x(), 0), Vec2() );
+  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "set bullets w=%f h=%f", GLogic->getScreenSize().x(), GLogic->getScreenSize().y());
+  BulletsCont->addBullet(Vec2(), Vec2());
+  BulletsCont->addBullet(-GLogic->getScreenSize()/2, Vec2());
+  BulletsCont->addBullet(Vec2(-GLogic->getScreenSize().x()/2, GLogic->getScreenSize().y()/2), Vec2());
+  BulletsCont->addBullet(GLogic->getScreenSize()/2, Vec2() );
+  BulletsCont->addBullet(Vec2(GLogic->getScreenSize().x()/2, -GLogic->getScreenSize().y()/2), Vec2());
   return;
 }
 

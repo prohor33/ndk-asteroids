@@ -135,7 +135,6 @@ static void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
 
 // Called from the app framework.
 void appInit()  {
-  GLogic->Initialize();
 }
 
 // Called from the app framework.
@@ -184,4 +183,7 @@ void appRender (long tick, int width, int height)  {
 void appResize(int width, int height) {
   float aspect = (float)height / width;
   GLogic->setScreenSize(Vec2(100, aspect*100));
+  // TODO: why is it here?
+  //  maybe because we should set size before initialize bullets
+  GLogic->Initialize();
 }
