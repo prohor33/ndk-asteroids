@@ -11,7 +11,7 @@ public:
   Vec2& getPos() { return p; };
   Vec2& getVel() { return v; };
   Vec2& getSize() { return size; };
-private:
+protected:
   Vec2 p;
   Vec2 v;
   Vec2 size;

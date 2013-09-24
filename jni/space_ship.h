@@ -10,9 +10,12 @@ public:
     static SpaceShip SpaceShip_;
     return &SpaceShip_;
   };
+  void update(float dt);
 private:
   SpaceShip();
   ~SpaceShip() {};
+  void _fire();
+  float deltaFire;
 };
 
 #define Ship SpaceShip::instance()

@@ -34,6 +34,7 @@ void PhysicsEngine::UpdateBullets( double dt ) {
 
 void PhysicsEngine::UpdateSpaceShip( double dt ) {
   Ship->getPos() += Ship->getVel()*dt;
+  Ship->update(dt);
   return;
 }
 
