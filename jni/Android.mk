@@ -17,6 +17,8 @@ LOCAL_SRC_FILES := \
     obstacle.cpp \
     obstacles_container.cpp \
     physics_engine.cpp \
+    space_object.cpp \
+    space_ship.cpp \
 
 LOCAL_LDLIBS := -lGLESv1_CM -ldl -llog
 include $(BUILD_SHARED_LIBRARY)

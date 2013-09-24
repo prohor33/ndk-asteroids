@@ -39,7 +39,8 @@ Java_com_example_SanAngeles_DemoRenderer_nativeResize( JNIEnv*  env, jobject  th
 {
     sWindowWidth  = w;
     sWindowHeight = h;
-    __android_log_print(ANDROID_LOG_INFO, "SanAngeles", "resize w=%d h=%d", w, h);
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "resize w=%d h=%d", w, h);
+    appResize(w, h);
 }
 
 /* Call to finalize the graphics state */

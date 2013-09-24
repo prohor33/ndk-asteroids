@@ -11,6 +11,7 @@ public:
 		return &BulletsContainer_;
 	};
 	void addBullet( Vec2 p, Vec2 v );
+	vector<Bullet*>& getMass() { return mBullets; };
 	vector<Bullet*> mBullets;
 private:
 	BulletsContainer() {};

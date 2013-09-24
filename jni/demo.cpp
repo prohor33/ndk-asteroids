@@ -180,3 +180,8 @@ void appRender (long tick, int width, int height)  {
 
   GLogic->MainGameLoop((double)sTick/1000);
 }
+
+void appResize(int width, int height) {
+  float aspect = (float)height / width;
+  GLogic->setScreenSize(Vec2(100, aspect*100));
+}

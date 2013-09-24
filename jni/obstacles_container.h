@@ -10,10 +10,13 @@ public:
 		static ObstaclesContainer ObstaclesContainer_;
 		return &ObstaclesContainer_;
 	};
+	vector<Obstacle*>& getMass() { return mObstacles; };
+	vector<Obstacle*> mObstacles;
 private:
 	ObstaclesContainer() {};
 	~ObstaclesContainer() {};
-	vector<Obstacle*> mObstacles;
 };
+
+#define ObstCont ObstaclesContainer::instance()
 
 #endif	/* OBSTACLES_CONTAINER_H_ */
