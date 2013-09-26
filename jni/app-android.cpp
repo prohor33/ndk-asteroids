@@ -93,6 +93,13 @@ Java_com_example_SanAngeles_DemoGLSurfaceView_nativeResume( JNIEnv*  env )
     _resume();
 }
 
+void
+Java_com_example_SanAngeles_DemoGLSurfaceView_nativeTouch( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
+{
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Touch x=%f y=%f", x, y);
+    appTouch(x, y);
+}
+
 /* Call to render the next GL frame */
 void
 Java_com_example_SanAngeles_DemoRenderer_nativeRender( JNIEnv*  env )

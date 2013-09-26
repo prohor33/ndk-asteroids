@@ -13,22 +13,16 @@ void PhysicsEngine::UpdateGameState( double dt ) {
 }
 
 void PhysicsEngine::UpdateObstacles( double dt ) {
-  //__android_log_print(ANDROID_LOG_INFO, "Asteroids", "UpdateObstacles");
   vector<Obstacle*>::iterator cii;
   for( cii=ObstCont->getMass().begin(); cii!=ObstCont->getMass().end(); ++cii )
     (*cii)->getPos() += (*cii)->getVel()*dt;
-  //__android_log_print(ANDROID_LOG_INFO, "Asteroids", "UpdateObstacles end");
   return;
 }
 
 void PhysicsEngine::UpdateBullets( double dt ) {
-//  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "UpdateBullets size = %i, size2 = %i",
-//      BulletsCont->getMass().size(), BulletsCont->mBullets.size());
   vector<Bullet*>::iterator cii;
-  //for( cii=BulletsCont->mBullets.begin(); cii!=BulletsCont->mBullets.end(); ++cii )
   for( cii=BulletsCont->getMass().begin(); cii!=BulletsCont->getMass().end(); ++cii )
     (*cii)->getPos() += (*cii)->getVel()*dt;
-  //__android_log_print(ANDROID_LOG_INFO, "Asteroids", "UpdateBullets end");
   return;
 }
 

@@ -45,7 +45,8 @@ class DemoGLSurfaceView extends GLSurfaceView {
 
     public boolean onTouchEvent(final MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            nativeTogglePauseResume();
+            //nativeTogglePauseResume();
+            nativeTouch(event.getX(), event.getY());            
         }
         return true;
     }
@@ -68,6 +69,7 @@ class DemoGLSurfaceView extends GLSurfaceView {
     private static native void nativePause();
     private static native void nativeResume();
     private static native void nativeTogglePauseResume();
+    private static native void nativeTouch(float x, float y);
 }
 
 class DemoRenderer implements GLSurfaceView.Renderer {

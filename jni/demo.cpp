@@ -2,6 +2,7 @@
 #include "app.h"
 #include "graphic_engine.h"
 #include "game_logic.h"
+#include "space_ship.h"
 
 static long sStartTick = 0;
 static long sTick = 0;
@@ -182,8 +183,15 @@ void appRender (long tick, int width, int height)  {
 
 void appResize(int width, int height) {
   float aspect = (float)height / width;
+  GLogic->setScreenSizeInPixels(Vec2(width, height));
   GLogic->setScreenSize(Vec2(100, aspect*100));
   // TODO: why is it here?
   //  maybe because we should set size before initialize bullets
   GLogic->Initialize();
+}
+
+void appTouch(float x, float y) {
+  // TODO: do it in the right way
+  // write touch handler or smth
+  Ship->getPos() = GLogic->pixCoordToNormal(Vec2(x, y));
 }
