@@ -1,19 +1,19 @@
 #ifndef GRAPHIC_ENGINE_H_
 #define GRAPHIC_ENGINE_H_
 
+class SpaceObject;
+
 class GraphicEngine {
 public:
 	static GraphicEngine* instance() {
 		static GraphicEngine GraphicEngine_;
 		return &GraphicEngine_;
 	};
-	void RenderFrame();
+	void renderFrame();
 private:
 	GraphicEngine() {};
 	~GraphicEngine() {};
-	void DrawObstacles();
-	void DrawBullets();
-	void DrawSpaceShip();
+	void drawObj(SpaceObject* obj);
 };
 
 #define Graphic GraphicEngine::instance()

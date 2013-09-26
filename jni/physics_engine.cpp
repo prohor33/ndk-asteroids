@@ -1,36 +1,40 @@
 #include "physics_engine.h"
 #include "bullet.h"
-#include "bullets_container.h"
 #include "obstacle.h"
-#include "obstacles_container.h"
 #include "space_ship.h"
 
-void PhysicsEngine::UpdateGameState( double dt ) {
-	UpdateObstacles( dt );
-	UpdateBullets( dt );
-	UpdateSpaceShip( dt );
+void PhysicsEngine::updateGameState(float dt) {
+	update(dt);
+	computeCollisions();
 	return;
 }
 
-void PhysicsEngine::UpdateObstacles( double dt ) {
-  vector<Obstacle*>::iterator cii;
-  for( cii=ObstCont->getMass().begin(); cii!=ObstCont->getMass().end(); ++cii )
-    (*cii)->getPos() += (*cii)->getVel()*dt;
+void PhysicsEngine::update(float dt) {
+  vector<SpaceObject*>::iterator cii;
+  for( cii=objContainer.begin(); cii!=objContainer.end(); ++cii )
+    (*cii)->update(dt);
   return;
 }
 
-void PhysicsEngine::UpdateBullets( double dt ) {
-  vector<Bullet*>::iterator cii;
-  for( cii=BulletsCont->getMass().begin(); cii!=BulletsCont->getMass().end(); ++cii )
-    (*cii)->getPos() += (*cii)->getVel()*dt;
-  return;
+void PhysicsEngine::computeCollisions() {
+  vector<SpaceObject*>::iterator cii;
+//  for( cii=objContainer.begin(); cii!=objContainer.end(); ++cii )
+//    (*cii)->update(dt);
 }
 
-void PhysicsEngine::UpdateSpaceShip( double dt ) {
-  Ship->getPos() += Ship->getVel()*dt;
-  Ship->update(dt);
-  return;
+void PhysicsEngine::addObject(Vec2 p, Vec2 v,
+    SpaceObject::ObjectType objectType) {
+  switch (objectType) {
+  case SpaceObject::BULLET:
+    objContainer.push_back(new Bullet(p, v));
+    break;
+  case SpaceObject::OBSTACLE:
+    objContainer.push_back(new Obstacle(p, v));
+    break;
+  case SpaceObject::SPACE_SHIP:
+    objContainer.push_back(Ship);
+    break;
+  }
 }
-
 
 

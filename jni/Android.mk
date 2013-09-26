@@ -10,12 +10,10 @@ LOCAL_CFLAGS := -DANDROID_NDK \
 LOCAL_SRC_FILES := \
     app-android.cpp \
     bullet.cpp \
-    bullets_container.cpp \
     demo.cpp \
     game_logic.cpp \
     graphic_engine.cpp \
     obstacle.cpp \
-    obstacles_container.cpp \
     physics_engine.cpp \
     space_object.cpp \
     space_ship.cpp \

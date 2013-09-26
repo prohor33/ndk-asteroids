@@ -1,16 +1,16 @@
 #include "game_logic.h"
 #include "graphic_engine.h"
 #include "physics_engine.h"
-#include "bullets_container.h"
 
 void GameLogic::Initialize() {
+  PEngine->addObject(Vec2(), Vec2(), SpaceObject::SPACE_SHIP);
   return;
 }
 
 void GameLogic::MainGameLoop(double dt) {
   // TODO: some game stuff here
-  PEngine->UpdateGameState( dt );
+  PEngine->updateGameState( dt );
 
-  Graphic->RenderFrame();
+  Graphic->renderFrame();
   return;
 }
