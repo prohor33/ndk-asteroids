@@ -9,6 +9,7 @@ class Obstacle : public SpaceObject {
 public:
 	Obstacle(Vec2 p, Vec2 v);
 	~Obstacle() {};
+  void update(float dt);
 private:
 };
 

@@ -8,6 +8,7 @@ class Bullet : public SpaceObject {
 public:
 	Bullet(Vec2 p, Vec2 v);
 	~Bullet() {};
+	void update(float dt);
 private:
 };
 

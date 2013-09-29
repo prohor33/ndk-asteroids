@@ -17,7 +17,7 @@ void PhysicsEngine::update(float dt) {
 }
 
 void PhysicsEngine::computeCollisions() {
-  vector<SpaceObject*>::iterator cii;
+  vector<SpaceObject>::iterator cii;
 //  for( cii=objContainer.begin(); cii!=objContainer.end(); ++cii )
 //    (*cii)->update(dt);
 }

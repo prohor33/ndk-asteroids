@@ -8,14 +8,15 @@ SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
     deltaFire(0)  {};
 
 void SpaceShip::_fire() {
-  PEngine->addObject(p, Vec2(0, 50), SpaceObject::BULLET);
+  // error! why?
+  //PEngine->addObject(Vec2(), Vec2(0, 5), SpaceObject::BULLET);
 }
 
 void SpaceShip::update(float dt) {
   // firstly we should invoke superclass method
   this->SpaceObject::update(dt);
   deltaFire += dt;
-  if (deltaFire > 0.3f) {
+  if (deltaFire > 3.0f) {
     deltaFire = 0;
     _fire();
   }

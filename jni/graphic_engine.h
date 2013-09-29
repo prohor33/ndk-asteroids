@@ -1,6 +1,7 @@
 #ifndef GRAPHIC_ENGINE_H_
 #define GRAPHIC_ENGINE_H_
 
+#include "main.h"
 class SpaceObject;
 
 class GraphicEngine {
