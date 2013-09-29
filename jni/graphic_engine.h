@@ -14,7 +14,7 @@ public:
 private:
 	GraphicEngine() {};
 	~GraphicEngine() {};
-	void drawObj(SpaceObject* obj);
+	void drawObj(shared_ptr<SpaceObject> obj);
 };
 
 #define Graphic GraphicEngine::instance()

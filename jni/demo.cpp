@@ -5,6 +5,11 @@
 #include "space_ship.h"
 #include "physics_engine.h"
 
+namespace boost
+{
+    void throw_exception(std::exception const&) {}
+}
+
 static long sStartTick = 0;
 static long sTick = 0;
 

@@ -10,14 +10,14 @@ void PhysicsEngine::updateGameState(float dt) {
 }
 
 void PhysicsEngine::update(float dt) {
-  vector<SpaceObject*>::iterator cii;
+  vector<shared_ptr<SpaceObject> >::iterator cii;
   for( cii=objContainer.begin(); cii!=objContainer.end(); ++cii )
     (*cii)->update(dt);
   return;
 }
 
 void PhysicsEngine::computeCollisions() {
-  vector<SpaceObject>::iterator cii;
+  vector<shared_ptr<SpaceObject> >::iterator cii;
 //  for( cii=objContainer.begin(); cii!=objContainer.end(); ++cii )
 //    (*cii)->update(dt);
 }
@@ -26,13 +26,13 @@ void PhysicsEngine::addObject(Vec2 p, Vec2 v,
     SpaceObject::ObjectType objectType) {
   switch (objectType) {
   case SpaceObject::BULLET:
-    objContainer.push_back(new Bullet(p, v));
+    objContainer.push_back(shared_ptr<SpaceObject> (new Bullet(p, v)));
     break;
   case SpaceObject::OBSTACLE:
-    objContainer.push_back(new Obstacle(p, v));
+    objContainer.push_back(shared_ptr<SpaceObject> (new Obstacle(p, v)));
     break;
   case SpaceObject::SPACE_SHIP:
-    objContainer.push_back(Ship);
+    objContainer.push_back(shared_ptr<SpaceObject> (Ship));
     break;
   }
 }

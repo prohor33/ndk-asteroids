@@ -6,13 +6,13 @@
 #include "main.h"
 
 void GraphicEngine::renderFrame() {
-  vector<SpaceObject*>::iterator cii;
+  vector<shared_ptr<SpaceObject> >::iterator cii;
   for( cii=PEngine->objContainer.begin(); cii!=PEngine->objContainer.end(); ++cii )
     drawObj((*cii));
   return;
 }
 
-void GraphicEngine::drawObj(SpaceObject* obj) {
+void GraphicEngine::drawObj(shared_ptr<SpaceObject> obj) {
   GLfloat vertBullet[8] = {
       -0.5f, -0.5f,
       +0.5f, -0.5f,

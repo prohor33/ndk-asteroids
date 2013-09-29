@@ -11,9 +11,9 @@ public:
     return &SpaceShip_;
   };
   void update(float dt);
+  ~SpaceShip() {};
 private:
   SpaceShip();
-  ~SpaceShip() {};
   void _fire();
   float deltaFire;
 };

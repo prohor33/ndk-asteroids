@@ -13,7 +13,7 @@ public:
 	void updateGameState(float dt);
 	void addObject(Vec2 p, Vec2 v,
 	    SpaceObject::ObjectType objectType);
-	vector<SpaceObject*> objContainer;
+	vector<shared_ptr<SpaceObject> > objContainer;
 private:
 	PhysicsEngine() {};
 	~PhysicsEngine() {};
