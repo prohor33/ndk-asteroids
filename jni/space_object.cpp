@@ -9,4 +9,5 @@ void SpaceObject::goTo(Vec2 target_p) {
 
 void SpaceObject::update(float dt) {
   p += v * dt;
+  return;
 }

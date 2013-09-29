@@ -5,13 +5,15 @@
 
 void PhysicsEngine::updateGameState(float dt) {
 	update(dt);
-	computeCollisions();
+//	computeCollisions();
 	return;
 }
 
 void PhysicsEngine::update(float dt) {
+  size_t a;
   vector<shared_ptr<SpaceObject> >::iterator cii;
-  for( cii=objContainer.begin(); cii!=objContainer.end(); ++cii )
+  objContainer.reserve(std::size_t(objContainer.size()+10));
+  for (cii=objContainer.begin(); cii!=objContainer.end(); ++cii)
     (*cii)->update(dt);
   return;
 }

@@ -10,10 +10,6 @@ void GameLogic::Initialize() {
 
 void GameLogic::MainGameLoop(double dt) {
   // TODO: some game stuff here
-  boost::shared_ptr<int> a(new int);
-  vector<boost::shared_ptr<int> > v;
-  v.push_back(boost::shared_ptr<int>(new int));
-
   PEngine->updateGameState(dt);
 
   Graphic->renderFrame();
