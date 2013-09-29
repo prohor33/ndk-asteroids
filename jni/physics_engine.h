@@ -14,6 +14,8 @@ public:
 	void addObject(Vec2 p, Vec2 v,
 	    SpaceObject::ObjectType objectType);
 	vector<shared_ptr<SpaceObject> > objContainer;
+	bool intesects(shared_ptr<SpaceObject> o1,
+	    shared_ptr<SpaceObject> o2);
 private:
 	PhysicsEngine() {};
 	~PhysicsEngine() {};

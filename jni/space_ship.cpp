@@ -8,7 +8,7 @@ SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
     deltaFire(0)  {};
 
 void SpaceShip::_fire() {
-  PEngine->addObject(p, Vec2(0, 25), SpaceObject::BULLET);
+  PEngine->addObject(p+Vec2(0, size.y()/2), Vec2(0, 25), SpaceObject::BULLET);
   return;
 }
 

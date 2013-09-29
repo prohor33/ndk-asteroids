@@ -19,8 +19,17 @@ void GraphicEngine::drawObj(shared_ptr<SpaceObject> obj) {
       +0.5f, +0.5f,
       -0.5f, +0.5f
     };
-
-  glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+  switch(obj->getObjType()) {
+  case SpaceObject::BULLET:
+    glColor4f(0.0f, 1.0f, 0.0f, 0.0f);
+    break;
+  case SpaceObject::OBSTACLE:
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+    break;
+  case SpaceObject::SPACE_SHIP:
+    glColor4f(0.0f, 0.0f, 1.0f, 0.0f);
+    break;
+  }
   glMatrixMode(GL_PROJECTION);
   glPushMatrix();
   glTranslatef(obj->getPos().x(), obj->getPos().y(), 0);
