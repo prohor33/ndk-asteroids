@@ -4,13 +4,16 @@
 #include "main.h"
 #include "space_object.h"
 
-
 class Obstacle : public SpaceObject {
 public:
-	Obstacle(Vec2 p, Vec2 v);
+	Obstacle();
 	~Obstacle() {};
   void update(float dt);
+  GLfloat* getPolPoints() { return polPoints.get(); };
+  int getPolPointsSize() { return polPointsSize; };
 private:
+  shared_ptr<GLfloat[]> polPoints;
+  int polPointsSize;
 };
 
 #endif	/* OBSTACLE_H_ */

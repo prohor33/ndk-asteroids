@@ -102,7 +102,7 @@ void PhysicsEngine::addObject(Vec2 p, Vec2 v,
     objContainer.push_back(shared_ptr<SpaceObject> (new Bullet(p, v)));
     break;
   case SpaceObject::OBSTACLE:
-    objContainer.push_back(shared_ptr<SpaceObject> (new Obstacle(p, v)));
+    objContainer.push_back(shared_ptr<SpaceObject> (new Obstacle()));
     break;
   case SpaceObject::SPACE_SHIP:
     objContainer.push_back(shared_ptr<SpaceObject> (Ship));
@@ -112,12 +112,10 @@ void PhysicsEngine::addObject(Vec2 p, Vec2 v,
 
 void PhysicsEngine::spawnObstacles(float dt) {
   deltaSpawnObstacle_t += dt;
-  if (deltaSpawnObstacle_t > 3.0f) {
+  if (deltaSpawnObstacle_t > 5.0f) {
     deltaSpawnObstacle_t = 0;
     // spawn new obstacle
-    addObject(Vec2(GLogic->getHScrSize().x()*(rand()%100-50)/50.0f,
-        GLogic->getHScrSize().y()+20),
-        Vec2(0, -5), SpaceObject::OBSTACLE);
+    addObject(Vec2(), Vec2(), SpaceObject::OBSTACLE);
 
   }
 }
