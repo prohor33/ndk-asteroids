@@ -17,10 +17,12 @@ public:
 	bool intesects(shared_ptr<SpaceObject> o1,
 	    shared_ptr<SpaceObject> o2);
 private:
-	PhysicsEngine() {};
+	PhysicsEngine() : deltaSpawnObstacle_t(0) {};
 	~PhysicsEngine() {};
 	void update(float dt);
 	void computeCollisions();
+	void spawnObstacles(float dt);
+	float deltaSpawnObstacle_t;
 };
 
 #define PEngine PhysicsEngine::instance()

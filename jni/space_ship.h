@@ -15,7 +15,7 @@ public:
 private:
   SpaceShip();
   void _fire();
-  float deltaFire;
+  float deltaFire_t;
 };
 
 #define Ship SpaceShip::instance()
