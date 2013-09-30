@@ -3,10 +3,12 @@
 #include "game_logic.h"
 
 Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
-    Vec2(30, 30), 2, SpaceObject::OBSTACLE) {
+    Vec2(10, 10), 2, SpaceObject::OBSTACLE),
+    obstType(WHOLE) {
   p = Vec2(GLogic->getHScrSize().x()*(rand()%100-50)/50.0f,
-      GLogic->getHScrSize().y()+20);
+      GLogic->getHScrSize().y()+15);
   v = Vec2(0, -5);
+  // superclass value
   erasable = false;
   // here we generate random polygon
   float size = 10;

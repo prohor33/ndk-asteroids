@@ -42,37 +42,26 @@ void PhysicsEngine::computeCollisions() {
     for (cii2=objContainer.begin(); cii2!=objContainer.end(); ++cii2) {
       if ((*cii) == (*cii2))
         continue;
-//      if ((*cii)->getObjType() == (*cii2)->getObjType())
-//        continue;
-//      __android_log_print(ANDROID_LOG_INFO, "Asteroids",
-//          "collision=%i with %i", (*cii)->getObjType(), (*cii2)->getObjType());
+      if ((*cii)->getObjType() == (*cii2)->getObjType())
+        continue;
       switch ((*cii)->getObjType()) {
       case SpaceObject::BULLET:
         switch ((*cii2)->getObjType()) {
         // with
-        case SpaceObject::BULLET:
+        case SpaceObject::OBSTACLE:
           // TODO: check whether it intersects
           // if so, invoke blowUp() or something
-//          if (intesects(*cii, *cii2)) {
-//            __android_log_print(ANDROID_LOG_INFO, "Asteroids",
-//                "inters=%i with %i", cii-objContainer.begin(),
-//                cii2-objContainer.begin());
-//            objContainer.erase(cii);
-//            if (*cii < *cii2)
-//              --cii2;
-//            objContainer.erase(cii2);
-//            if (*cii2 < *cii)
-//              --cii;
-//            __android_log_print(ANDROID_LOG_INFO, "Asteroids",
-//                "after inters=%i with %i", cii-objContainer.begin(),
-//                cii2-objContainer.begin());
-//          }
+          if (intesects(*cii, *cii2)) {
+            eraseFromObjCont(cii, cii2);
+            goto this_object;
+          }
           break;
         }
         break;
       }
     }
     ++cii;
+    this_object: {}
   }
 }
 
@@ -112,10 +101,31 @@ void PhysicsEngine::addObject(Vec2 p, Vec2 v,
 
 void PhysicsEngine::spawnObstacles(float dt) {
   deltaSpawnObstacle_t += dt;
-  if (deltaSpawnObstacle_t > 5.0f) {
+  if (deltaSpawnObstacle_t > 1.0f) {
     deltaSpawnObstacle_t = 0;
     // spawn new obstacle
     addObject(Vec2(), Vec2(), SpaceObject::OBSTACLE);
+  }
+}
 
+void PhysicsEngine::eraseFromObjCont(
+    vector<shared_ptr<SpaceObject> >::iterator& it1,
+    vector<shared_ptr<SpaceObject> >::iterator& it2) {
+  if (it1 == it2) {
+    objContainer.erase(it1);
+    --it2;
+    return;
+  }
+  if (it1 < it2) {
+    objContainer.erase(it2);
+    objContainer.erase(it1);
+    it2--;
+    return;
+  }
+  if (it2 < it1) {
+    objContainer.erase(it1);
+    objContainer.erase(it2);
+    it1--;
+    return;
   }
 }

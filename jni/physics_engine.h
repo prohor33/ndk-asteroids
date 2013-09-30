@@ -16,6 +16,9 @@ public:
 	vector<shared_ptr<SpaceObject> > objContainer;
 	bool intesects(shared_ptr<SpaceObject> o1,
 	    shared_ptr<SpaceObject> o2);
+	void eraseFromObjCont(
+	    vector<shared_ptr<SpaceObject> >::iterator& it1,
+	    vector<shared_ptr<SpaceObject> >::iterator& it2);
 private:
 	PhysicsEngine() : deltaSpawnObstacle_t(0) {};
 	~PhysicsEngine() {};

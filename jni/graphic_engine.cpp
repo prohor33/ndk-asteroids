@@ -40,8 +40,6 @@ void GraphicEngine::drawObj(shared_ptr<SpaceObject> obj) {
   switch(obj->getObjType()) {
   case SpaceObject::OBSTACLE:
     obstacle = static_cast<Obstacle*>(obj.get());
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids",
-        "graphic=%i", obstacle->getPolPointsSize());
     glVertexPointer(2, GL_FLOAT, 0, obstacle->getPolPoints());
     glDrawArrays(GL_TRIANGLE_FAN, 0, obstacle->getPolPointsSize());
     break;
