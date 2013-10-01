@@ -12,7 +12,8 @@ public:
   void update(float dt);
   GLfloat* getPolPoints() { return polPoints.get(); };
   int getPolPointsSize() { return polPointsSize; };
-  //static void blowUp(Obstacle *);
+  void blowUp();
+  void setObstType(ObstType x) { obstType = x; };
 private:
   shared_ptr<GLfloat[]> polPoints;
   int polPointsSize;

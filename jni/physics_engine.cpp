@@ -52,7 +52,9 @@ void PhysicsEngine::computeCollisions() {
           // TODO: check whether it intersects
           // if so, invoke blowUp() or something
           if (intesects(*cii, *cii2)) {
+            __android_log_print(ANDROID_LOG_INFO, "Asteroids", "intersects_1");
             eraseFromObjCont(cii, cii2);
+            __android_log_print(ANDROID_LOG_INFO, "Asteroids", "intersects_end");
             goto this_object;
           }
           break;
@@ -111,18 +113,26 @@ void PhysicsEngine::spawnObstacles(float dt) {
 void PhysicsEngine::eraseFromObjCont(
     vector<shared_ptr<SpaceObject> >::iterator& it1,
     vector<shared_ptr<SpaceObject> >::iterator& it2) {
+  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "inter %i %i size=%i",
+      it1-objContainer.begin(), it2-objContainer.begin(), objContainer.size());
   if (it1 == it2) {
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "1");
     objContainer.erase(it1);
-    --it2;
     return;
   }
   if (it1 < it2) {
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "2");
     objContainer.erase(it2);
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "it2 erased");
     objContainer.erase(it1);
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "it1 erased");
     it2--;
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "aft inter %i %i size=%i",
+        it1-objContainer.begin(), it2-objContainer.begin(), objContainer.size());
     return;
   }
   if (it2 < it1) {
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "3");
     objContainer.erase(it1);
     objContainer.erase(it2);
     it1--;
