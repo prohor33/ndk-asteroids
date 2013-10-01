@@ -10,6 +10,7 @@ public:
 	~Bullet() {};
 	void update(float dt);
 	void collide(ObjectType withObj) {};
+	void goTo(Vec2 target_p) {};
 private:
 };
 

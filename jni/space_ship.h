@@ -13,10 +13,13 @@ public:
   void update(float dt);
   ~SpaceShip() {};
   void collide(ObjectType withObj);
+  void goTo(Vec2 target_p);
 private:
   SpaceShip();
   void _fire();
   float deltaFire_t;
+  Vec2 target_p;
+  bool haveTarget;
 };
 
 #define Ship SpaceShip::instance()

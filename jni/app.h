@@ -19,6 +19,7 @@ extern void appDeinit();
 extern void appRender(long tick, int width, int height);
 extern void appResize(int width, int height);
 extern void appTouch(float x, float y);
+extern void appMove(float x, float y);
 
 /* Value is non-zero when application is alive, and 0 when it is closing.
  * Defined by the application framework.

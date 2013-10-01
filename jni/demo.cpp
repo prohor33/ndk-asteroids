@@ -199,5 +199,11 @@ void appResize(int width, int height) {
 void appTouch(float x, float y) {
   // TODO: do it in the right way
   // write touch handler or smth
-  Ship->setPos(GLogic->pixCoordToNormal(Vec2(x, y)));
+  Ship->goTo(GLogic->pixCoordToNormal(Vec2(x, y)));
+}
+
+void appMove(float x, float y) {
+  // TODO: do it in the right way
+  // write touch handler or smth
+  Ship->goTo(GLogic->pixCoordToNormal(Vec2(x, y)));
 }

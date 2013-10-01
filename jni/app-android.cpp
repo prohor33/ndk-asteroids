@@ -100,6 +100,12 @@ Java_com_example_SanAngeles_DemoGLSurfaceView_nativeTouch( JNIEnv*  env, jobject
     appTouch(x, y);
 }
 
+void
+Java_com_example_SanAngeles_DemoGLSurfaceView_nativeMove( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
+{
+    appMove(x, y);
+}
+
 /* Call to render the next GL frame */
 void
 Java_com_example_SanAngeles_DemoRenderer_nativeRender( JNIEnv*  env )

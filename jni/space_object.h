@@ -23,14 +23,13 @@ public:
   const ObjectType& getObjType() { return objType; };
   GLfloat* getPolPoints() { return polPoints.get(); };
   const Color& getColor() { return color; };
-  void goTo(Vec2 target_p);
   virtual void update(float dt);
+  virtual void goTo(Vec2 target_p) = 0;
   virtual void collide(ObjectType withObj) = 0;
 protected:
   Vec2 p;
   Vec2 v;
   Vec2 size;
-  Vec2 target_p;
   const float velocity;
   ObjectType objType;
   bool erasable;

@@ -13,6 +13,7 @@ public:
   void blowUp();
   void setObstType(ObstType x) { obstType = x; };
   void collide(ObjectType withObj);
+  void goTo(Vec2 target_p) {};
 private:
   ObstType obstType;
 };

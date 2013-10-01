@@ -4,8 +4,8 @@
 
 SpaceShip::SpaceShip() :
 SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
-    Vec2(), Vec2(20, 30), 3, SpaceObject::SPACE_SHIP),
-    deltaFire_t(0)  {
+    Vec2(), Vec2(20, 30), 50, SpaceObject::SPACE_SHIP),
+    deltaFire_t(0), haveTarget(false)  {
   // let it be polygon
   polPointsSize = 4;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
@@ -29,6 +29,15 @@ void SpaceShip::update(float dt) {
     deltaFire_t = 0;
     _fire();
   }
+  // check whether ship reach
+  // the target
+  if (haveTarget) {
+    if ((target_p-p).x() * v.x() < 0 ||
+        (target_p-p).y() * v.y() < 0) {
+      haveTarget = false;
+      v = Vec2();
+    }
+  }
   return;
 }
 
@@ -36,4 +45,12 @@ void SpaceShip::collide(ObjectType withObj) {
   if (withObj == SpaceObject::OBSTACLE) {
     // here we die
   }
+}
+
+void SpaceShip::goTo(Vec2 target_p) {
+  this->target_p = target_p;
+  Vec2 delta = target_p - p;
+  delta.normalize();
+  v = delta * velocity;
+  haveTarget = true;
 }
