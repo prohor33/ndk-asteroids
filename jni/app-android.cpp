@@ -106,6 +106,12 @@ Java_com_example_SanAngeles_DemoGLSurfaceView_nativeMove( JNIEnv*  env, jobject 
     appMove(x, y);
 }
 
+void
+Java_com_example_SanAngeles_DemoGLSurfaceView_nativeUp( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
+{
+    appUp(x, y);
+}
+
 /* Call to render the next GL frame */
 void
 Java_com_example_SanAngeles_DemoRenderer_nativeRender( JNIEnv*  env )

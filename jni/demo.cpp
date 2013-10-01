@@ -197,13 +197,14 @@ void appResize(int width, int height) {
 }
 
 void appTouch(float x, float y) {
-  // TODO: do it in the right way
-  // write touch handler or smth
-  Ship->goTo(GLogic->pixCoordToNormal(Vec2(x, y)));
+  Ship->eventHandler(SpaceShip::DOWN, GLogic->pixCoordToNormal(Vec2(x, y)));
 }
 
 void appMove(float x, float y) {
-  // TODO: do it in the right way
-  // write touch handler or smth
-  Ship->goTo(GLogic->pixCoordToNormal(Vec2(x, y)));
+  Ship->eventHandler(SpaceShip::DRAG, GLogic->pixCoordToNormal(Vec2(x, y)));
 }
+
+void appUp(float x, float y) {
+  Ship->eventHandler(SpaceShip::UP, GLogic->pixCoordToNormal(Vec2(x, y)));
+}
+

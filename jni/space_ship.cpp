@@ -5,7 +5,7 @@
 SpaceShip::SpaceShip() :
 SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
     Vec2(), Vec2(20, 30), 50, SpaceObject::SPACE_SHIP),
-    deltaFire_t(0), haveTarget(false)  {
+    deltaFire_t(0), haveTarget(false), dragging(false)  {
   // let it be polygon
   polPointsSize = 4;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
@@ -53,4 +53,28 @@ void SpaceShip::goTo(Vec2 target_p) {
   delta.normalize();
   v = delta * velocity;
   haveTarget = true;
+}
+
+void SpaceShip::eventHandler(EventType eventType, Vec2 pos) {
+  switch (eventType) {
+  case DOWN:
+    // check whether it's start of dragging
+    if (pos.x() > p.x() - size.x()/2 &&
+        pos.x() < p.x() + size.x()/2 &&
+        pos.y() > p.y() - size.y()/2 &&
+        pos.y() < p.y() + size.y()/2) {
+      dragging = true;
+      deltaDragging = p - pos;
+      break;
+    }
+    goTo(pos);
+    break;
+  case UP:
+    dragging = false;
+    break;
+  case DRAG:
+    if (dragging)
+      setPos(pos + deltaDragging);
+    break;
+  }
 }

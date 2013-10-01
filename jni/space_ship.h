@@ -14,12 +14,16 @@ public:
   ~SpaceShip() {};
   void collide(ObjectType withObj);
   void goTo(Vec2 target_p);
+  enum EventType { NOT_DEFINED, DOWN, UP, DRAG };
+  void eventHandler(EventType eventType, Vec2 pos);
 private:
   SpaceShip();
   void _fire();
   float deltaFire_t;
   Vec2 target_p;
   bool haveTarget;
+  bool dragging;
+  Vec2 deltaDragging;
 };
 
 #define Ship SpaceShip::instance()
