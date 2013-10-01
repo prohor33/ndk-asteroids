@@ -16,6 +16,7 @@ public:
   const ObjectType& getObjType() { return objType; };
   void setVel(Vec2 v) { this->v = v; };
   void setPos(Vec2 p) { this->p = p; };
+  void setSize(Vec2 size) { this->size = size; };
   void goTo(Vec2 target_p);
   virtual void update(float dt);
   virtual void collide(ObjectType withObj) {};

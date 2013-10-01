@@ -7,7 +7,7 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
     Vec2(10, 10), 2, SpaceObject::OBSTACLE),
     obstType(WHOLE) {
   p = Vec2(GLogic->getHScrSize().x()*(rand()%100-50)/50.0f,
-      GLogic->getHScrSize().y()/2+15);
+      GLogic->getHScrSize().y()+15);
   v = Vec2(0, -5);
   // superclass value
   erasable = false;
@@ -30,7 +30,6 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
     polPoints[k*2+1] = rand_size * sin(alpha);
     k++;
   }
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "k=%i", k);
 };
 
 void Obstacle::update(float dt) {
@@ -39,22 +38,27 @@ void Obstacle::update(float dt) {
 }
 
 void Obstacle::blowUp() {
+  if (obstType == PIECE)
+    return;
   shared_ptr<SpaceObject> obj;
-  int k=0;
+  int k=2;
   float vel = 5;
-  for (float alpha = 1; alpha <= 2*PI; alpha+=2*PI/polPointsSize) {
+  for (float alpha = 2*PI/(polPointsSize-2); alpha <= 2*PI; alpha+=2*PI/(polPointsSize-2)) {
     obj = shared_ptr<SpaceObject>(new Obstacle());
-    obj->setPos(p);
+    Vec2 delta_p = Vec2(size.x()/2 * cos(alpha), size.y()/2 * sin(alpha));
+    obj->setPos(p+delta_p);
     obj->setVel(Vec2(vel * cos(alpha), vel * sin(alpha)));
     Obstacle* obst = static_cast<Obstacle*>(obj.get());
     obst->setObstType(PIECE);
     obst->polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*3]);
-    obst->polPoints[0] = p.x();
-    obst->polPoints[1] = p.y();
-    obst->polPoints[2] = polPoints[k*2-2];
-    obst->polPoints[3] = polPoints[k*2-1];
-    obst->polPoints[4] = polPoints[k*2];
-    obst->polPoints[5] = polPoints[k*2+1];
+    obst->polPoints[0] = 0-delta_p.x();
+    obst->polPoints[1] = 0-delta_p.y();
+    obst->polPoints[2] = polPoints[k*2-2]-delta_p.x();
+    obst->polPoints[3] = polPoints[k*2-1]-delta_p.y();
+    obst->polPoints[4] = polPoints[k*2]-delta_p.x();
+    obst->polPoints[5] = polPoints[k*2+1]-delta_p.y();
+    obst->setPolPointsSize(3);
+    obj->setSize(size/2);
     PEngine->objContainer.push_back(obj);
     k++;
   }

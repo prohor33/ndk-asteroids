@@ -52,9 +52,10 @@ void PhysicsEngine::computeCollisions() {
           // TODO: check whether it intersects
           // if so, invoke blowUp() or something
           if (intesects(*cii, *cii2)) {
-            __android_log_print(ANDROID_LOG_INFO, "Asteroids", "intersects_1");
+            //__android_log_print(ANDROID_LOG_INFO, "Asteroids", "intersects_1");
+            Obstacle* obst = static_cast<Obstacle*>((*cii2).get());
+            obst->blowUp();
             eraseFromObjCont(cii, cii2);
-            __android_log_print(ANDROID_LOG_INFO, "Asteroids", "intersects_end");
             goto this_object;
           }
           break;
@@ -103,7 +104,7 @@ void PhysicsEngine::addObject(Vec2 p, Vec2 v,
 
 void PhysicsEngine::spawnObstacles(float dt) {
   deltaSpawnObstacle_t += dt;
-  if (deltaSpawnObstacle_t > 1.0f) {
+  if (deltaSpawnObstacle_t > 3.0f) {
     deltaSpawnObstacle_t = 0;
     // spawn new obstacle
     addObject(Vec2(), Vec2(), SpaceObject::OBSTACLE);
@@ -113,26 +114,17 @@ void PhysicsEngine::spawnObstacles(float dt) {
 void PhysicsEngine::eraseFromObjCont(
     vector<shared_ptr<SpaceObject> >::iterator& it1,
     vector<shared_ptr<SpaceObject> >::iterator& it2) {
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "inter %i %i size=%i",
-      it1-objContainer.begin(), it2-objContainer.begin(), objContainer.size());
   if (it1 == it2) {
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "1");
     objContainer.erase(it1);
     return;
   }
   if (it1 < it2) {
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "2");
     objContainer.erase(it2);
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "it2 erased");
     objContainer.erase(it1);
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "it1 erased");
     it2--;
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "aft inter %i %i size=%i",
-        it1-objContainer.begin(), it2-objContainer.begin(), objContainer.size());
     return;
   }
   if (it2 < it1) {
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "3");
     objContainer.erase(it1);
     objContainer.erase(it2);
     it1--;
