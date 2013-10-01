@@ -13,43 +13,14 @@ void GraphicEngine::renderFrame() {
 }
 
 void GraphicEngine::drawObj(shared_ptr<SpaceObject> obj) {
-  GLfloat vertBullet[8] = {
-      -0.5f, -0.5f,
-      +0.5f, -0.5f,
-      +0.5f, +0.5f,
-      -0.5f, +0.5f
-    };
   glMatrixMode(GL_PROJECTION);
   glPushMatrix();
   glTranslatef(obj->getPos().x(), obj->getPos().y(), 0);
-  switch(obj->getObjType()) {
-  case SpaceObject::BULLET:
-    glColor4f(0.0f, 1.0f, 0.0f, 0.0f);
-    break;
-  case SpaceObject::OBSTACLE:
-    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
-    break;
-  case SpaceObject::SPACE_SHIP:
-    glColor4f(0.0f, 0.0f, 1.0f, 0.0f);
-    break;
-  }
+  Color c = obj->getColor();
+  glColor4f(c.r(), c.g(), c.b(), c.a());
   glEnableClientState(GL_VERTEX_ARRAY);
-  // TODO: switch again?
-  // do we really need it?
-  Obstacle* obstacle;
-  switch(obj->getObjType()) {
-  case SpaceObject::OBSTACLE:
-    obstacle = static_cast<Obstacle*>(obj.get());
-    glVertexPointer(2, GL_FLOAT, 0, obstacle->getPolPoints());
-    glDrawArrays(GL_TRIANGLE_FAN, 0, obstacle->getPolPointsSize());
-    break;
-  case SpaceObject::SPACE_SHIP:
-  case SpaceObject::BULLET:
-    glScalef(obj->getSize().x(), obj->getSize().y(), 1);
-    glVertexPointer(2, GL_FLOAT, 0, vertBullet);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    break;
-  }
+  glVertexPointer(2, GL_FLOAT, 0, obj->getPolPoints());
+  glDrawArrays(GL_TRIANGLE_FAN, 0, obj->getPolPointsSize());
   glDisableClientState(GL_VERTEX_ARRAY);
   glPopMatrix();
   return;

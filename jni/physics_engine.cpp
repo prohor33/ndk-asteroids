@@ -49,18 +49,26 @@ void PhysicsEngine::computeCollisions() {
         switch ((*cii2)->getObjType()) {
         // with
         case SpaceObject::OBSTACLE:
-          // TODO: check whether it intersects
-          // if so, invoke blowUp() or something
           if (intesects(*cii, *cii2)) {
             //__android_log_print(ANDROID_LOG_INFO, "Asteroids", "intersects_1");
-            Obstacle* obst = static_cast<Obstacle*>((*cii2).get());
-            obst->blowUp();
+            (*cii2)->collide(SpaceObject::BULLET);
             eraseFromObjCont(cii, cii2);
             goto this_object;
           }
           break;
         }
         break;
+        case SpaceObject::OBSTACLE:
+          switch ((*cii2)->getObjType()) {
+          // with
+          case SpaceObject::SPACE_SHIP:
+            if (intesects(*cii, *cii2)) {
+              (*cii2)->collide(SpaceObject::OBSTACLE);
+              continue;
+            }
+            break;
+          }
+          break;
       }
     }
     ++cii;

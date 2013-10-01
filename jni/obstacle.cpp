@@ -19,10 +19,8 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
   polPointsSize = 10;
   float rand_size;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
-  // TODO: make delta angle random too
   polPoints[0] = 0;
   polPoints[1] = 0;
-  // something going not right here (+1 -1 somewhere)
   int k=1;
   for (float alpha = 0; alpha <= 2*PI; alpha+=2*PI/(polPointsSize-2)) {
     rand_size = min_size + (max_size-min_size) * (rand() % 100) / 100.0;
@@ -30,11 +28,17 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
     polPoints[k*2+1] = rand_size * sin(alpha);
     k++;
   }
+  color = Color(1.0f, 0.0f, 0.0f, 0.0f);
 };
 
 void Obstacle::update(float dt) {
   // firstly we should invoke superclass method
   this->SpaceObject::update(dt);
+}
+
+void Obstacle::collide(ObjectType withObj) {
+  if (withObj == SpaceObject::BULLET)
+    blowUp();
 }
 
 void Obstacle::blowUp() {

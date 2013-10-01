@@ -12,6 +12,7 @@ public:
   };
   void update(float dt);
   ~SpaceShip() {};
+  void collide(ObjectType withObj);
 private:
   SpaceShip();
   void _fire();

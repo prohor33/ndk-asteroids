@@ -10,14 +10,10 @@ public:
 	Obstacle();
 	~Obstacle() {};
   void update(float dt);
-  GLfloat* getPolPoints() { return polPoints.get(); };
-  int getPolPointsSize() { return polPointsSize; };
-  int setPolPointsSize(int x) { polPointsSize = x; };
   void blowUp();
   void setObstType(ObstType x) { obstType = x; };
+  void collide(ObjectType withObj);
 private:
-  shared_ptr<GLfloat[]> polPoints;
-  int polPointsSize;
   ObstType obstType;
 };
 

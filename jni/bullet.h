@@ -9,6 +9,7 @@ public:
 	Bullet(Vec2 p, Vec2 v);
 	~Bullet() {};
 	void update(float dt);
+	void collide(ObjectType withObj) {};
 private:
 };
 
