@@ -15,6 +15,8 @@ extern void appTouch(float x, float y);
 extern void appMove(float x, float y);
 extern void appUp(float x, float y);
 
+void _pause();
+void _resume();
 /* Value is non-zero when application is alive, and 0 when it is closing.
  * Defined by the application framework.
  */

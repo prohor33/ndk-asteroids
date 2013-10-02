@@ -2,6 +2,7 @@
 #include "graphic_engine.h"
 #include "physics_engine.h"
 #include "space_ship.h"
+#include "app.h"
 
 void GameLogic::Initialize() {
   if (justResume)
@@ -25,11 +26,24 @@ void GameLogic::DeInitialize() {
   shouldDeinitialise = true;
   justResume = false;
   PEngine->deleteAllObjects();
+  paused = false;
 }
 
 void GameLogic::newGame() {
   // TODO: set scores to zero
   // or something like that
+}
+
+void GameLogic::gameOver() {
+  if (paused)
+    return;
+  paused = true;
+  _pause();
+}
+
+void GameLogic::restartGame() {
+  DeInitialize();
+  Initialize();
 }
 
 void GameLogic::MainGameLoop(double dt) {

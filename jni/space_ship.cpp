@@ -45,7 +45,7 @@ void SpaceShip::update(float dt) {
 
 void SpaceShip::collide(ObjectType withObj) {
   if (withObj == SpaceObject::OBSTACLE) {
-    // here we die
+    GLogic->gameOver();
   }
 }
 
@@ -69,6 +69,8 @@ void SpaceShip::_preventOutOfBorders(Vec2& pos) {
 }
 
 void SpaceShip::eventHandler(EventType eventType, Vec2 pos) {
+  if (GLogic->getPaused())
+    return;
   Vec2 draggingPos;
   float downTouchArea = 10;
   switch (eventType) {

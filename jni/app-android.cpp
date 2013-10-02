@@ -4,6 +4,7 @@
 #include <android/log.h>
 #include <stdint.h>
 #include "app.h"
+#include "game_logic.h"
 
 int   gAppAlive   = 1;
 
@@ -62,6 +63,7 @@ void _pause()
    * time in sTimeStopped for future nativeRender calls */
     sDemoStopped = 1;
     sTimeStopped = _getTime();
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Paused!");
 }
 
 void _resume()
@@ -86,14 +88,16 @@ Java_com_example_SanAngeles_DemoGLSurfaceView_nativeTogglePauseResume( JNIEnv*  
 void
 Java_com_example_SanAngeles_DemoGLSurfaceView_nativePause( JNIEnv*  env )
 {
-    _pause();
+    if (!GLogic->getPaused())
+        _pause();
     __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Pause");
 }
 
 void
 Java_com_example_SanAngeles_DemoGLSurfaceView_nativeResume( JNIEnv*  env )
 {
-    _resume();
+    if (!GLogic->getPaused())
+      _resume();
     __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Resume");
 }
 

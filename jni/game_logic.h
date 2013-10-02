@@ -12,12 +12,12 @@ public:
     static GameLogic GameLogic_;
     return &GameLogic_;
   };
-  //const Vec2& getScrSize() { return screen_size; };
-  const Vec2 getScrSize() { return screen_size; };
+  const Vec2& getScrSize() { return screen_size; };
   const Vec2 getHScrSize() { return screen_size/2; };
+  void setPaused(bool x) { paused = x; };
+  bool getPaused() { return paused; };
   void setScreenSize(Vec2 screen_size) { this->screen_size = screen_size; };
-  //const Vec2& getScrSizeInPixels() { return screen_size_in_pixels; };
-  const Vec2 getScrSizeInPixels() { return screen_size_in_pixels; };
+  const Vec2& getScrSizeInPixels() { return screen_size_in_pixels; };
   void setScreenSizeInPixels(Vec2 screen_size_in_pixels) {
     this->screen_size_in_pixels = screen_size_in_pixels;
   };
@@ -27,18 +27,22 @@ public:
         screen_size_in_pixels.y()) - screen_size / 2;
   }
   void newGame();
+  void gameOver();
+  void restartGame();
 private:
   GameLogic() :
     // this is only default screen sizes
     // it will be changed in appResize()
     screen_size(100, 150),
     screen_size_in_pixels(480, 720),
-    justResume(false), shouldDeinitialise(false) {};
+    justResume(false), shouldDeinitialise(false),
+    paused(false) {};
   ~GameLogic() {};
   Vec2 screen_size;
   Vec2 screen_size_in_pixels;
   bool justResume;
   bool shouldDeinitialise;
+  bool paused;
 };
 
 #define GLogic GameLogic::instance()

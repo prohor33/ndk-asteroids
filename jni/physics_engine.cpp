@@ -57,17 +57,18 @@ void PhysicsEngine::computeCollisions() {
           break;
         }
         break;
+      case SpaceObject::SPACE_SHIP:
+        switch ((*cii2)->getObjType()) {
+        // with
         case SpaceObject::OBSTACLE:
-          switch ((*cii2)->getObjType()) {
-          // with
-          case SpaceObject::SPACE_SHIP:
-            if (intesects(*cii, *cii2)) {
-              (*cii2)->collide(SpaceObject::OBSTACLE);
-              continue;
-            }
-            break;
+          if (intesects(*cii, *cii2)) {
+            (*cii)->collide(SpaceObject::OBSTACLE);
+            // new game have started
+            return;
           }
           break;
+        }
+        break;
       }
     }
     ++cii;

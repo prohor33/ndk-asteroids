@@ -4,6 +4,7 @@
 #include "obstacle.h"
 #include "space_ship.h"
 #include "main.h"
+#include "game_logic.h"
 
 void GraphicEngine::renderFrame() {
   vector<shared_ptr<SpaceObject> >::iterator cii;
