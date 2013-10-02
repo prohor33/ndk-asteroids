@@ -68,13 +68,14 @@ void SpaceShip::_preventOutOfBorders(Vec2& pos) {
 
 void SpaceShip::eventHandler(EventType eventType, Vec2 pos) {
   Vec2 draggingPos;
+  float downTouchArea = 10;
   switch (eventType) {
   case DOWN:
     // check whether it's start of dragging
     if (pos.x() > p.x() - size.x()/2 &&
         pos.x() < p.x() + size.x()/2 &&
-        pos.y() > p.y() - size.y()/2 &&
-        pos.y() < p.y() + size.y()/2) {
+        pos.y() > p.y() - size.y()/2 - downTouchArea &&
+        pos.y() < p.y() + size.y()/2 - downTouchArea) {
       dragging = true;
       haveTarget = false;
       v = Vec2();
