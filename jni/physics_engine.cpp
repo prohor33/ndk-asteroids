@@ -25,10 +25,10 @@ void PhysicsEngine::computeCollisions() {
   vector<shared_ptr<SpaceObject> >::iterator cii2;
   for (cii=objContainer.begin(); cii!=objContainer.end();) {
     // tracking the borders
-    if ((*cii)->getPos().x() > GLogic->getHScrSize().x() ||
-        (*cii)->getPos().x() < -GLogic->getHScrSize().x() ||
-        (*cii)->getPos().y() > GLogic->getHScrSize().y() ||
-        (*cii)->getPos().y() < -GLogic->getHScrSize().y()) {
+    if ((*cii)->getPos().x() - (*cii)->getSize().x()/2 > GLogic->getHScrSize().x() ||
+        (*cii)->getPos().x() + (*cii)->getSize().x()/2 < -GLogic->getHScrSize().x() ||
+        (*cii)->getPos().y() - (*cii)->getSize().y()/2 > GLogic->getHScrSize().y() ||
+        (*cii)->getPos().y() + (*cii)->getSize().y()/2 < -GLogic->getHScrSize().y()) {
       if ((*cii)->getErasable() && (*cii)->getObjType() != SpaceObject::SPACE_SHIP) {
         objContainer.erase(cii);
         continue;
@@ -85,10 +85,10 @@ bool PhysicsEngine::intesects(shared_ptr<SpaceObject> o1, shared_ptr<SpaceObject
       o1->getPos().y() > o2->getPos().y() ? o1 : o2;
   shared_ptr<SpaceObject> min_y =
       o1->getPos().y() <= o2->getPos().y() ? o1 : o2;
-  if (max_x->getPos().x() - max_x->getSize().x() <
-      min_x->getPos().x() + min_x->getSize().x()) {
-    if (max_y->getPos().y() - max_y->getSize().y() <
-          min_y->getPos().y() + min_y->getSize().y()) {
+  if (max_x->getPos().x() - max_x->getSize().x()/2 <
+      min_x->getPos().x() + min_x->getSize().x()/2) {
+    if (max_y->getPos().y() - max_y->getSize().y()/2 <
+          min_y->getPos().y() + min_y->getSize().y()/2) {
       return true;
     }
   }

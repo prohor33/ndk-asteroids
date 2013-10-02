@@ -79,7 +79,7 @@ void SpaceShip::eventHandler(EventType eventType, Vec2 pos) {
     if (pos.x() > p.x() - size.x()/2 &&
         pos.x() < p.x() + size.x()/2 &&
         pos.y() > p.y() - size.y()/2 - downTouchArea &&
-        pos.y() < p.y() + size.y()/2 - downTouchArea) {
+        pos.y() < p.y() + size.y()/2 - downTouchArea/2) {
       dragging = true;
       haveTarget = false;
       v = Vec2();

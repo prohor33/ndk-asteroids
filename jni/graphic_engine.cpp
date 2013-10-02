@@ -17,6 +17,7 @@ void GraphicEngine::drawObj(shared_ptr<SpaceObject> obj) {
   glMatrixMode(GL_PROJECTION);
   glPushMatrix();
   glTranslatef(obj->getPos().x(), obj->getPos().y(), 0);
+  glRotatef(obj->getAngle(), 0, 0, 1);
   Color c = obj->getColor();
   glColor4f(c.r(), c.g(), c.b(), c.a());
   glEnableClientState(GL_VERTEX_ARRAY);

@@ -4,28 +4,28 @@
 #include "physics_engine.h"
 
 Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
-    Vec2(10, 10), 2, SpaceObject::OBSTACLE),
+    Vec2(20, 20), 2, SpaceObject::OBSTACLE),
     obstType(WHOLE) {
   p = Vec2(GLogic->getHScrSize().x()*(rand()%100-50)/50.0f,
       GLogic->getHScrSize().y()+15);
-  v = Vec2(0, -5);
+  v = Vec2((rand()%100-50)/50.0 * 2.0, (rand()%30+70)/100.0 * (-6));
   // superclass value
   erasable = false;
   // here we generate random polygon
-  float size = 10;
+  float size = this->size.x();
   float size_coef = 0.5;
-  float min_size = size * (1 - size_coef);
-  float max_size = size * (1 + size_coef);
+  float min_rad = size * (1 - size_coef) / 2;
+  float max_rad = size * (1 + size_coef) / 2;
   polPointsSize = 10;
-  float rand_size;
+  float rand_rad;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
   polPoints[0] = 0;
   polPoints[1] = 0;
   int k=1;
   for (float alpha = 0; alpha <= 2*PI; alpha+=2*PI/(polPointsSize-2)) {
-    rand_size = min_size + (max_size-min_size) * (rand() % 100) / 100.0;
-    polPoints[k*2] = rand_size * cos(alpha);
-    polPoints[k*2+1] = rand_size * sin(alpha);
+    rand_rad = min_rad + (max_rad-min_rad) * (rand() % 100) / 100.0;
+    polPoints[k*2] = rand_rad * cos(alpha);
+    polPoints[k*2+1] = rand_rad * sin(alpha);
     k++;
   }
   color = Color(1.0f, 0.0f, 0.0f, 0.0f);
@@ -34,6 +34,9 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
 void Obstacle::update(float dt) {
   // firstly we should invoke superclass method
   this->SpaceObject::update(dt);
+  angle += 0.1 * dt;
+  if (angle > 2*PI)
+    angle = 0;
 }
 
 void Obstacle::collide(ObjectType withObj) {
@@ -47,11 +50,16 @@ void Obstacle::blowUp() {
   shared_ptr<SpaceObject> obj;
   int k=2;
   float vel = 5;
-  for (float alpha = 2*PI/(polPointsSize-2); alpha <= 2*PI; alpha+=2*PI/(polPointsSize-2)) {
+  float angle_now;
+  for (float alpha = 2*PI/(polPointsSize-2); alpha <= 2*PI;
+      alpha+=2*PI/(polPointsSize-2)) {
+    angle_now = alpha - angle;
     obj = shared_ptr<SpaceObject>(new Obstacle());
-    Vec2 delta_p = Vec2(size.x()/2 * cos(alpha), size.y()/2 * sin(alpha));
-    obj->setPos(p+delta_p);
-    obj->setVel(Vec2(vel * cos(alpha), vel * sin(alpha)));
+    Vec2 delta_p = Vec2(size.x() / 2 * cos(angle_now),
+        size.y() / 2 * sin(angle_now));
+    obj->setPos(p + delta_p);
+    obj->setVel(v + Vec2(vel * cos(angle_now),
+        vel * sin(angle_now)));
     Obstacle* obst = static_cast<Obstacle*>(obj.get());
     obst->setObstType(PIECE);
     obst->polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*3]);
