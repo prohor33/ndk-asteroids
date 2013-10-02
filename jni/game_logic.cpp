@@ -1,11 +1,35 @@
 #include "game_logic.h"
 #include "graphic_engine.h"
 #include "physics_engine.h"
+#include "space_ship.h"
 
 void GameLogic::Initialize() {
-  PEngine->addObject(Vec2(), Vec2(), SpaceObject::SPACE_SHIP);
-  PEngine->addObject(Vec2(), Vec2(5, 5), SpaceObject::BULLET);
+  if (justResume)
+    return;
+  // in case if we need reinitialize the ship
+  // for example, we run application
+  // after it's finished before
+  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "shouldDeinitialise = %i", shouldDeinitialise);
+  if (shouldDeinitialise) {
+    SpaceShip::needReinitializing = true;
+    Ship;
+  }
+  else
+    PEngine->addObject(Vec2(), Vec2(), SpaceObject::SPACE_SHIP);
+  newGame();
+  justResume = true;
   return;
+}
+
+void GameLogic::DeInitialize() {
+  shouldDeinitialise = true;
+  justResume = false;
+  PEngine->deleteAllObjects();
+}
+
+void GameLogic::newGame() {
+  // TODO: set scores to zero
+  // or something like that
 }
 
 void GameLogic::MainGameLoop(double dt) {

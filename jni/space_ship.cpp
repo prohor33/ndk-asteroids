@@ -2,10 +2,12 @@
 #include "game_logic.h"
 #include "physics_engine.h"
 
+bool SpaceShip::needReinitializing = false;
+
 SpaceShip::SpaceShip() :
 SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
     Vec2(), Vec2(20, 30), 50, SpaceObject::SPACE_SHIP),
-    deltaFire_t(0), haveTarget(false), dragging(false)  {
+    deltaFire_t(0), haveTarget(false), dragging(false) {
   // let it be polygon
   polPointsSize = 4;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);

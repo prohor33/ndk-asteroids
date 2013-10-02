@@ -138,3 +138,16 @@ void PhysicsEngine::eraseFromObjCont(
     return;
   }
 }
+
+void PhysicsEngine::deleteAllObjects() {
+  // we cannot use objContainer.clear() here
+  // because of deleting static SpaceShip
+  vector<shared_ptr<SpaceObject> >::iterator cii;
+  objContainer.reserve(std::size_t(objContainer.size()+10));
+  for (cii=objContainer.begin(); cii!=objContainer.end();) {
+    if ((*cii)->getObjType() != SpaceObject::SPACE_SHIP)
+      objContainer.erase(cii);
+    else
+      ++cii;
+  }
+}

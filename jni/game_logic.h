@@ -6,7 +6,7 @@
 class GameLogic {
 public:
   void Initialize();
-  void DeInitialize() {};
+  void DeInitialize();
   void MainGameLoop(double dt);
   static GameLogic* instance() {
     static GameLogic GameLogic_;
@@ -26,11 +26,19 @@ public:
         screen_size.y() - pix_c.y() * screen_size.y() /
         screen_size_in_pixels.y()) - screen_size / 2;
   }
+  void newGame();
 private:
-  GameLogic() {};
+  GameLogic() :
+    // this is only default screen sizes
+    // it will be changed in appResize()
+    screen_size(100, 150),
+    screen_size_in_pixels(480, 720),
+    justResume(false), shouldDeinitialise(false) {};
   ~GameLogic() {};
   Vec2 screen_size;
   Vec2 screen_size_in_pixels;
+  bool justResume;
+  bool shouldDeinitialise;
 };
 
 #define GLogic GameLogic::instance()

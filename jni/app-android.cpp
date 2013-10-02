@@ -31,6 +31,7 @@ void
 Java_com_example_SanAngeles_DemoRenderer_nativeInit( JNIEnv*  env )
 {
     appInit();
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Init");
     gAppAlive  = 1;
 }
 
@@ -45,9 +46,10 @@ Java_com_example_SanAngeles_DemoRenderer_nativeResize( JNIEnv*  env, jobject  th
 
 /* Call to finalize the graphics state */
 void
-Java_com_example_SanAngeles_DemoRenderer_nativeDone( JNIEnv*  env )
+Java_com_example_SanAngeles_DemoActivity_nativeDone( JNIEnv*  env )
 {
     appDeinit();
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Done");
 }
 
 /* This is called to indicate to the render loop that it should
@@ -85,12 +87,14 @@ void
 Java_com_example_SanAngeles_DemoGLSurfaceView_nativePause( JNIEnv*  env )
 {
     _pause();
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Pause");
 }
 
 void
 Java_com_example_SanAngeles_DemoGLSurfaceView_nativeResume( JNIEnv*  env )
 {
     _resume();
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Resume");
 }
 
 void

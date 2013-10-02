@@ -19,6 +19,7 @@ public:
 	void eraseFromObjCont(
 	    vector<shared_ptr<SpaceObject> >::iterator& it1,
 	    vector<shared_ptr<SpaceObject> >::iterator& it2);
+	void deleteAllObjects();
 private:
 	PhysicsEngine() : deltaSpawnObstacle_t(0) {};
 	~PhysicsEngine() {};

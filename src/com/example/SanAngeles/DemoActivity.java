@@ -15,12 +15,22 @@ public class DemoActivity extends Activity {
         super.onCreate(savedInstanceState);
         mGLView = new DemoGLSurfaceView(this);
         setContentView(mGLView);
+        System.out.println("DemoActivity::onCreate()");
     }
 
     @Override
     protected void onPause() {
+    	System.out.println("DemoActivity::onPause()");
         super.onPause();
         mGLView.onPause();
+    }
+    
+    @Override
+    public void onBackPressed() {
+    	System.out.println("DemoActivity::onBackPressed()");
+    	nativeDone();
+    	onPause();
+    	finish();
     }
 
     @Override
@@ -34,6 +44,8 @@ public class DemoActivity extends Activity {
     static {
         System.loadLibrary("sanangeles");
     }
+    
+    private static native void nativeDone();
 }
 
 class DemoGLSurfaceView extends GLSurfaceView {
@@ -78,7 +90,7 @@ class DemoGLSurfaceView extends GLSurfaceView {
     private static native void nativeTogglePauseResume();
     private static native void nativeTouch(float x, float y);
     private static native void nativeMove(float x, float y);
-    private static native void nativeUp(float x, float y);
+    private static native void nativeUp(float x, float y);    
 }
 
 class DemoRenderer implements GLSurfaceView.Renderer {
@@ -97,6 +109,5 @@ class DemoRenderer implements GLSurfaceView.Renderer {
 
     private static native void nativeInit();
     private static native void nativeResize(int w, int h);
-    private static native void nativeRender();
-    private static native void nativeDone();
+    private static native void nativeRender();   
 }

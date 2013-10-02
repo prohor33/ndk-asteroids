@@ -13,43 +13,6 @@ namespace boost
 static long sStartTick = 0;
 static long sTick = 0;
 
-static void drawFadeQuad()
-{
-    static const GLfixed quadVertices[] = {
-        -0x10000, -0x10000,
-         0x10000, -0x10000,
-        -0x10000,  0x10000,
-         0x10000, -0x10000,
-         0x10000,  0x10000,
-        -0x10000,  0x10000
-    };
-
-        glDisable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_ZERO, GL_SRC_COLOR);
-        glDisable(GL_LIGHTING);
-
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-
-        glDisableClientState(GL_COLOR_ARRAY);
-        glDisableClientState(GL_NORMAL_ARRAY);
-        glVertexPointer(2, GL_FIXED, 0, quadVertices);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-
-        glEnableClientState(GL_COLOR_ARRAY);
-
-        glMatrixMode(GL_MODELVIEW);
-
-        glEnable(GL_LIGHTING);
-        glDisable(GL_BLEND);
-        glEnable(GL_DEPTH_TEST);
-
-}
-
 /* Following gluLookAt implementation is adapted from the
  * Mesa 3D Graphics library. http://www.mesa3d.org
  */
@@ -142,6 +105,7 @@ static void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
 
 // Called from the app framework.
 void appInit()  {
+  GLogic->Initialize();
 }
 
 // Called from the app framework.
@@ -191,9 +155,6 @@ void appResize(int width, int height) {
   float aspect = (float)height / width;
   GLogic->setScreenSizeInPixels(Vec2(width, height));
   GLogic->setScreenSize(Vec2(100, aspect*100));
-  // TODO: why is it here?
-  //  maybe because we should set size before initialize bullets
-  GLogic->Initialize();
 }
 
 void appTouch(float x, float y) {

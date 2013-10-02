@@ -30,7 +30,7 @@ protected:
   Vec2 p;
   Vec2 v;
   Vec2 size;
-  const float velocity;
+  float velocity;
   ObjectType objType;
   bool erasable;
   shared_ptr<GLfloat[]> polPoints;
