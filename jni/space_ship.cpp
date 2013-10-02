@@ -55,7 +55,19 @@ void SpaceShip::goTo(Vec2 target_p) {
   haveTarget = true;
 }
 
+void SpaceShip::_preventOutOfBorders(Vec2& pos) {
+  if (pos.x() > GLogic->getHScrSize().x() - size.x()/2)
+    pos.x() = GLogic->getHScrSize().x() - size.x()/2;
+  if (pos.x() < -GLogic->getHScrSize().x() + size.x()/2)
+    pos.x() = -GLogic->getHScrSize().x() + size.x()/2;
+  if (pos.y() > GLogic->getHScrSize().y() - size.y()/2)
+    pos.y() = GLogic->getHScrSize().y() - size.y()/2;
+  if (pos.y() < -GLogic->getHScrSize().y() + size.y()/2)
+    pos.y() = -GLogic->getHScrSize().y() + size.y()/2;
+}
+
 void SpaceShip::eventHandler(EventType eventType, Vec2 pos) {
+  Vec2 draggingPos;
   switch (eventType) {
   case DOWN:
     // check whether it's start of dragging
@@ -64,17 +76,23 @@ void SpaceShip::eventHandler(EventType eventType, Vec2 pos) {
         pos.y() > p.y() - size.y()/2 &&
         pos.y() < p.y() + size.y()/2) {
       dragging = true;
+      haveTarget = false;
+      v = Vec2();
       deltaDragging = p - pos;
       break;
     }
+    _preventOutOfBorders(pos);
     goTo(pos);
     break;
   case UP:
     dragging = false;
     break;
   case DRAG:
-    if (dragging)
-      setPos(pos + deltaDragging);
+    if (dragging) {
+      draggingPos = pos + deltaDragging;
+      _preventOutOfBorders(draggingPos);
+      setPos(draggingPos);
+    }
     break;
   }
 }

@@ -19,6 +19,7 @@ public:
 private:
   SpaceShip();
   void _fire();
+  void _preventOutOfBorders(Vec2& pos);
   float deltaFire_t;
   Vec2 target_p;
   bool haveTarget;

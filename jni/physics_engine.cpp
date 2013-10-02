@@ -23,14 +23,13 @@ void PhysicsEngine::update(float dt) {
 void PhysicsEngine::computeCollisions() {
   vector<shared_ptr<SpaceObject> >::iterator cii;
   vector<shared_ptr<SpaceObject> >::iterator cii2;
-  // we have some trouble here with erasing and iterators
   for (cii=objContainer.begin(); cii!=objContainer.end();) {
     // tracking the borders
     if ((*cii)->getPos().x() > GLogic->getHScrSize().x() ||
         (*cii)->getPos().x() < -GLogic->getHScrSize().x() ||
         (*cii)->getPos().y() > GLogic->getHScrSize().y() ||
         (*cii)->getPos().y() < -GLogic->getHScrSize().y()) {
-      if ((*cii)->getErasable()) {
+      if ((*cii)->getErasable() && (*cii)->getObjType() != SpaceObject::SPACE_SHIP) {
         objContainer.erase(cii);
         continue;
       }
