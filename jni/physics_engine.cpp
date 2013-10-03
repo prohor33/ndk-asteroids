@@ -112,7 +112,7 @@ void PhysicsEngine::addObject(Vec2 p, Vec2 v,
 
 void PhysicsEngine::spawnObstacles(float dt) {
   deltaSpawnObstacle_t += dt;
-  if (deltaSpawnObstacle_t > 3.0f) {
+  if (deltaSpawnObstacle_t > 1.0f) {
     deltaSpawnObstacle_t = 0;
     // spawn new obstacle
     addObject(Vec2(), Vec2(), SpaceObject::OBSTACLE);

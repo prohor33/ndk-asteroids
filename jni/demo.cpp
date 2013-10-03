@@ -159,14 +159,11 @@ void appResize(int width, int height) {
 
 void appTouch(float x, float y) {
   if (GLogic->getPaused()) {
-    GLogic->setPaused(false);
-    // actually it's not good, but we should do this
-    // to unpause when game is over
-    GLogic->restartGame();
-    _resume();
+    // should restart
+    // game as soon as possible
+    GLogic->setNeedRestart();
   }
-  else
-    Ship->eventHandler(SpaceShip::DOWN, GLogic->pixCoordToNormal(Vec2(x, y)));
+  Ship->eventHandler(SpaceShip::DOWN, GLogic->pixCoordToNormal(Vec2(x, y)));
 }
 
 void appMove(float x, float y) {

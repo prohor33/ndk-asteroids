@@ -30,8 +30,8 @@ void GameLogic::DeInitialize() {
 }
 
 void GameLogic::newGame() {
-  // TODO: set scores to zero
-  // or something like that
+  level = 0;
+  score = 0;
 }
 
 void GameLogic::gameOver() {
@@ -41,13 +41,20 @@ void GameLogic::gameOver() {
   _pause();
 }
 
+void GameLogic::setNeedRestart() {
+  needRestart = true;
+}
+
 void GameLogic::restartGame() {
+  needRestart = false;
+  _resume();
   DeInitialize();
   Initialize();
 }
 
 void GameLogic::MainGameLoop(double dt) {
-  // TODO: some game stuff here
+  if (needRestart)
+    restartGame();
   PEngine->updateGameState(dt);
 
   Graphic->renderFrame();

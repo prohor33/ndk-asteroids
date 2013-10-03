@@ -29,6 +29,7 @@ public:
   void newGame();
   void gameOver();
   void restartGame();
+  void setNeedRestart();
 private:
   GameLogic() :
     // this is only default screen sizes
@@ -36,13 +37,17 @@ private:
     screen_size(100, 150),
     screen_size_in_pixels(480, 720),
     justResume(false), shouldDeinitialise(false),
-    paused(false) {};
+    paused(false), needRestart(false),
+    level(0), score(0) {};
   ~GameLogic() {};
   Vec2 screen_size;
   Vec2 screen_size_in_pixels;
   bool justResume;
   bool shouldDeinitialise;
   bool paused;
+  bool needRestart;
+  int level;
+  int score;
 };
 
 #define GLogic GameLogic::instance()

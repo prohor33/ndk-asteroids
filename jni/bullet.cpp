@@ -1,7 +1,7 @@
 #include "bullet.h"
 #include "game_logic.h"
 
-Bullet::Bullet(Vec2 p, Vec2 v) : SpaceObject (p, v, Vec2(10, 10), -1, SpaceObject::BULLET) {
+Bullet::Bullet(Vec2 p, Vec2 v) : SpaceObject (p, v, Vec2(6, 6), -1, SpaceObject::BULLET) {
   // let it be triangle
   polPointsSize = 3;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
@@ -10,6 +10,7 @@ Bullet::Bullet(Vec2 p, Vec2 v) : SpaceObject (p, v, Vec2(10, 10), -1, SpaceObjec
   polPoints[2] = 0; polPoints[3] = l;
   polPoints[4] = sqrt(3)*l/2; polPoints[5] = -l/2;
   color = Color(0.0f, 1.0f, 0.0f, 0.0f);
+  angleVelocity = 8*PI;
 };
 
 void Bullet::update(float dt) {
