@@ -8,7 +8,8 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
     obstType(WHOLE) {
   p = Vec2(GLogic->getHScrSize().x()*(rand()%100-50)/50.0f,
       GLogic->getHScrSize().y()+10);
-  v = Vec2((rand()%100-50)/50.0 * 4.0, (rand()%30+70)/100.0 * (-20));
+  float v_y[] = { -10, -15, -20 };
+  v = Vec2((rand()%100-50)/50.0 * 4.0, (rand()%30+70)/100.0 * v_y[GLogic->getLevel()]);
   // superclass value
   erasable = false;
   // here we generate random polygon

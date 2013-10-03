@@ -4,13 +4,15 @@
 #include "space_ship.h"
 #include "app.h"
 
+// it's level switch time, actually
+float GameLogic::levelTime[] = { 30, 30+30, 30+30+-1 };
+
 void GameLogic::Initialize() {
   if (justResume)
     return;
   // in case if we need reinitialize the ship
   // for example, we run application
   // after it's finished before
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "shouldDeinitialise = %i", shouldDeinitialise);
   if (shouldDeinitialise) {
     SpaceShip::needReinitializing = true;
     Ship;
@@ -32,6 +34,7 @@ void GameLogic::DeInitialize() {
 void GameLogic::newGame() {
   level = 0;
   score = 0;
+  timePassed = 0;
 }
 
 void GameLogic::gameOver() {
@@ -55,8 +58,14 @@ void GameLogic::restartGame() {
 void GameLogic::MainGameLoop(double dt) {
   if (needRestart)
     restartGame();
+  timePassed += dt;
+  if (timePassed > levelTime[level]) {
+    if (level < 2) {
+      level++;
+      __android_log_print(ANDROID_LOG_INFO, "Asteroids", "level up!");
+    }
+  }
   PEngine->updateGameState(dt);
-
   Graphic->renderFrame();
   return;
 }

@@ -26,6 +26,8 @@ public:
         screen_size.y() - pix_c.y() * screen_size.y() /
         screen_size_in_pixels.y()) - screen_size / 2;
   }
+  void addScore(int x) { score += x; };
+  int getLevel() { return level; };
   void newGame();
   void gameOver();
   void restartGame();
@@ -38,7 +40,7 @@ private:
     screen_size_in_pixels(480, 720),
     justResume(false), shouldDeinitialise(false),
     paused(false), needRestart(false),
-    level(0), score(0) {};
+    level(0), score(0), timePassed(0) {};
   ~GameLogic() {};
   Vec2 screen_size;
   Vec2 screen_size_in_pixels;
@@ -48,6 +50,8 @@ private:
   bool needRestart;
   int level;
   int score;
+  static float levelTime[];
+  float timePassed;
 };
 
 #define GLogic GameLogic::instance()

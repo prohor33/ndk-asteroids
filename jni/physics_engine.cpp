@@ -51,6 +51,7 @@ void PhysicsEngine::computeCollisions() {
           if (intesects(*cii, *cii2)) {
             //__android_log_print(ANDROID_LOG_INFO, "Asteroids", "intersects_1");
             (*cii2)->collide(SpaceObject::BULLET);
+            GLogic->addScore(1);
             eraseFromObjCont(cii, cii2);
             goto this_object;
           }
@@ -112,7 +113,8 @@ void PhysicsEngine::addObject(Vec2 p, Vec2 v,
 
 void PhysicsEngine::spawnObstacles(float dt) {
   deltaSpawnObstacle_t += dt;
-  if (deltaSpawnObstacle_t > 1.0f) {
+  float maxDeltaSpawnObstacles[] = { 2.0, 1.5, 1.0 };
+  if (deltaSpawnObstacle_t > maxDeltaSpawnObstacles[GLogic->getLevel()]) {
     deltaSpawnObstacle_t = 0;
     // spawn new obstacle
     addObject(Vec2(), Vec2(), SpaceObject::OBSTACLE);
