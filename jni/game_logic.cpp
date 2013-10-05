@@ -22,9 +22,11 @@ void GameLogic::Initialize() {
   newGame();
   justResume = true;
   if (paused) {
-    paused = false;
     _resume();
+    paused = false;
   }
+  needRestart = false;
+  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Initialize end");
   return;
 }
 
@@ -64,8 +66,11 @@ void GameLogic::restartGame() {
 }
 
 void GameLogic::MainGameLoop(double dt) {
-  if (needRestart)
+  bool debug_flag3 = false;
+  if (needRestart) {
     restartGame();
+    debug_flag3 = true;
+  }
   timePassed += dt;
   if (timePassed > levelTime[level]) {
     if (level < 2) {
@@ -74,6 +79,10 @@ void GameLogic::MainGameLoop(double dt) {
     }
   }
   PEngine->updateGameState(dt);
+  if (debug_flag3)
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "updateGameState end");
   Graphic->renderFrame();
+  if (debug_flag3)
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "renderFrame end");
   return;
 }

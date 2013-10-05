@@ -30,6 +30,7 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
     polPoints[k*2+1] = rand_rad * sin(alpha);
     k++;
   }
+  // generate random obstacles color and angle velocity
   color = Color((rand()%90+10)/100.0, (rand()%90+10)/100.0, (rand()%90+10)/100.0, 0);
   angleVelocity = (rand()%100-50)/50.0 * 0.2;
 };
@@ -44,21 +45,25 @@ void Obstacle::collide(ObjectType withObj) {
     blowUp();
 }
 
+// the most complicated function in that project =)
 void Obstacle::blowUp() {
   if (obstType == PIECE)
     return;
   shared_ptr<SpaceObject> obj;
-  int k=2;
-  float vel = 5;
+  int k=2;  // because k=0 and k=1 is Vec2(0,0) point
+  // and we use [k*2-2] in this loop
+  float vel = 5;  // velocity of expansion
   float angle_now;
   float rand_rad;
   Vec2 delta_p;
-  // create a bunch of new obstacles
-  // some magic here
+  // create a bunch of new obstacles (triangles)
   for (float alpha = 2*PI/(polPointsSize-2); alpha <= 2*PI;
       alpha+=2*PI/(polPointsSize-2)) {
+    // angle considering rotation
     angle_now = alpha + angle;
     obj = shared_ptr<SpaceObject>(new Obstacle());
+    // delta_p is vector between position of new triangle
+    // and position of an old obstacle
     delta_p = Vec2(size.x() / 4 * cos(angle_now),
         size.y() / 4 * sin(angle_now));
     obj->setPos(p + delta_p);
@@ -67,17 +72,22 @@ void Obstacle::blowUp() {
     obj->setAngleVelocity(0);
     Obstacle* obst = static_cast<Obstacle*>(obj.get());
     obst->setObstType(PIECE);
+    // set triangle vertices
     obst->polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*3]);
     obst->polPoints[0] = 0-delta_p.x();
     obst->polPoints[1] = 0-delta_p.y();
+    // we will compute rand_rad in order
+    // to get rotate it
     rand_rad = Vec2(polPoints[k*2-2], polPoints[k*2-1]).length();
     obst->polPoints[2] = rand_rad * cos(angle_now-2*PI/(polPointsSize-2)) - delta_p.x();
     obst->polPoints[3] = rand_rad * sin(angle_now-2*PI/(polPointsSize-2)) - delta_p.y();
     rand_rad = Vec2(polPoints[k*2], polPoints[k*2+1]).length();
     obst->polPoints[4] = rand_rad * cos(angle_now) - delta_p.x();
     obst->polPoints[5] = rand_rad * sin(angle_now) - delta_p.y();
+    // this is triangle
     obst->setPolPointsSize(3);
     obj->setSize(size/2);
+    // just keep parent color
     obj->setColor(color);
     PEngine->objContainer.push_back(obj);
     k++;

@@ -13,7 +13,7 @@ void PhysicsEngine::updateGameState(float dt) {
 
 void PhysicsEngine::update(float dt) {
   vector<shared_ptr<SpaceObject> >::iterator cii;
-  objContainer.reserve(std::size_t(objContainer.size()+10));
+  objContainer.reserve(std::size_t(objContainer.size()+50));
   for (cii=objContainer.begin(); cii!=objContainer.end(); ++cii)
     (*cii)->update(dt);
   return;
@@ -22,8 +22,9 @@ void PhysicsEngine::update(float dt) {
 void PhysicsEngine::computeCollisions() {
   vector<shared_ptr<SpaceObject> >::iterator cii;
   vector<shared_ptr<SpaceObject> >::iterator cii2;
+  objContainer.reserve(std::size_t(objContainer.size()+50));
   for (cii=objContainer.begin(); cii!=objContainer.end();) {
-    // tracking the borders
+    // tracking intersections with borders
     if ((*cii)->getPos().x() - (*cii)->getSize().x()/2 > GLogic->getHScrSize().x() ||
         (*cii)->getPos().x() + (*cii)->getSize().x()/2 < -GLogic->getHScrSize().x() ||
         (*cii)->getPos().y() - (*cii)->getSize().y()/2 > GLogic->getHScrSize().y() ||
@@ -76,13 +77,15 @@ void PhysicsEngine::computeCollisions() {
 
 typedef boost::geometry::model::d2::point_xy<GLfloat> point;
 typedef boost::geometry::model::polygon<point,false, false> b_polygon;
-// counterclockwise order, close
+// "false, false" is counterclockwise order and close polygons
 
 point rotateVector(point p, float angle) {
   float alpha;
   float rad;
   // compute alpha
   if (p.x() == 0) {
+    // vector can be vertical
+    // so dividing by zero will occur
     if (p.y() > 0)
       alpha = PI/2;
     else
@@ -122,6 +125,8 @@ bool PhysicsEngine::intesects(shared_ptr<SpaceObject> o1, shared_ptr<SpaceObject
 
   if (o1->getObjType() == SpaceObject::SPACE_SHIP && output.size() > 0 && GLogic->debug_flag1) {
     for (std::deque<b_polygon>::iterator it = output.begin(); it!=output.end(); ++it) {
+      if ((*it).outer().size() < 3)
+        continue;
       shared_ptr<SpaceObject> obj = shared_ptr<SpaceObject>(new Obstacle());
       Obstacle* obst = static_cast<Obstacle*>(obj.get());
       obst->setObstType(Obstacle::PIECE);
@@ -175,6 +180,10 @@ void PhysicsEngine::spawnObstacles(float dt) {
 void PhysicsEngine::eraseFromObjCont(
     vector<shared_ptr<SpaceObject> >::iterator& it1,
     vector<shared_ptr<SpaceObject> >::iterator& it2) {
+  // we have two iterators at once.
+  // when you erase two elements from vector
+  // it may "corrupt" one of the iterators
+  // so, we have to do some trick here
   if (it1 == it2) {
     objContainer.erase(it1);
     return;
