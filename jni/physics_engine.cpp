@@ -12,7 +12,6 @@ void PhysicsEngine::updateGameState(float dt) {
 }
 
 void PhysicsEngine::update(float dt) {
-  size_t a;
   vector<shared_ptr<SpaceObject> >::iterator cii;
   objContainer.reserve(std::size_t(objContainer.size()+10));
   for (cii=objContainer.begin(); cii!=objContainer.end(); ++cii)
@@ -195,14 +194,16 @@ void PhysicsEngine::eraseFromObjCont(
 }
 
 void PhysicsEngine::deleteAllObjects() {
-  // we cannot use objContainer.clear() here
-  // because of deleting static SpaceShip
+  // we should prevent static
+  // spaceship from deleting
+  shared_ptr<SpaceObject> copy;
   vector<shared_ptr<SpaceObject> >::iterator cii;
-  objContainer.reserve(std::size_t(objContainer.size()+10));
-  for (cii=objContainer.begin(); cii!=objContainer.end();) {
-    if ((*cii)->getObjType() != SpaceObject::SPACE_SHIP)
-      objContainer.erase(cii);
-    else
-      ++cii;
+  for (cii=objContainer.begin(); cii!=objContainer.end(); ++cii) {
+    if ((*cii)->getObjType() == SpaceObject::SPACE_SHIP) {
+      copy = (*cii);
+      break;
+    }
   }
+  objContainer.clear();
+  objContainer.push_back(copy);
 }

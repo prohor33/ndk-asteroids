@@ -21,6 +21,10 @@ void GameLogic::Initialize() {
     PEngine->addObject(Vec2(), Vec2(), SpaceObject::SPACE_SHIP);
   newGame();
   justResume = true;
+  if (paused) {
+    paused = false;
+    _resume();
+  }
   return;
 }
 
@@ -28,7 +32,10 @@ void GameLogic::DeInitialize() {
   shouldDeinitialise = true;
   justResume = false;
   PEngine->deleteAllObjects();
-  paused = false;
+  if (!paused) {
+    paused = true;
+    _pause();
+  }
 }
 
 void GameLogic::newGame() {
@@ -52,7 +59,6 @@ void GameLogic::setNeedRestart() {
 
 void GameLogic::restartGame() {
   needRestart = false;
-  _resume();
   DeInitialize();
   Initialize();
 }
