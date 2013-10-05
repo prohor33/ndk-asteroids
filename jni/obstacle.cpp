@@ -23,13 +23,14 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
   polPoints[0] = 0;
   polPoints[1] = 0;
   int k=1;
+  // this is counterclockwise order too
   for (float alpha = 0; alpha <= 2*PI; alpha+=2*PI/(polPointsSize-2)) {
     rand_rad = min_rad + (max_rad-min_rad) * (rand() % 100) / 100.0;
     polPoints[k*2] = rand_rad * cos(alpha);
     polPoints[k*2+1] = rand_rad * sin(alpha);
     k++;
   }
-  color = Color((rand()%90+10)/100.0, (rand()%90+10)/100.0, (rand()%90+10)/100.0, (rand()%90+10)/100.0);
+  color = Color((rand()%90+10)/100.0, (rand()%90+10)/100.0, (rand()%90+10)/100.0, 0);
   angleVelocity = (rand()%100-50)/50.0 * 0.2;
 };
 
@@ -63,7 +64,6 @@ void Obstacle::blowUp() {
     obj->setPos(p + delta_p);
     obj->setVel(v + Vec2(vel * cos(angle_now),
         vel * sin(angle_now)));
-    obj->setAngle(0);
     obj->setAngleVelocity(0);
     Obstacle* obst = static_cast<Obstacle*>(obj.get());
     obst->setObstType(PIECE);

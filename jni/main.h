@@ -13,6 +13,13 @@
 
 #include <boost/shared_ptr.hpp>
 
+// for polygon intersects
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/point_xy.hpp>
+#include <boost/geometry/geometries/polygon.hpp>
+
+#include <boost/polygon/polygon.hpp>
+
 #include "vec2.h"
 
 #undef PI

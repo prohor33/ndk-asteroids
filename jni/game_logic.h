@@ -32,6 +32,8 @@ public:
   void gameOver();
   void restartGame();
   void setNeedRestart();
+  bool debug_flag1;
+  bool debug_flag2;
 private:
   GameLogic() :
     // this is only default screen sizes
@@ -40,7 +42,8 @@ private:
     screen_size_in_pixels(480, 720),
     justResume(false), shouldDeinitialise(false),
     paused(false), needRestart(false),
-    level(0), score(0), timePassed(0) {};
+    level(0), score(0), timePassed(0),
+    debug_flag1(true), debug_flag2(true) {};
   ~GameLogic() {};
   Vec2 screen_size;
   Vec2 screen_size_in_pixels;

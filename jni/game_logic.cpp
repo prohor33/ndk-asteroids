@@ -35,6 +35,8 @@ void GameLogic::newGame() {
   level = 0;
   score = 0;
   timePassed = 0;
+  debug_flag1 = true;
+  debug_flag2 = true;
 }
 
 void GameLogic::gameOver() {

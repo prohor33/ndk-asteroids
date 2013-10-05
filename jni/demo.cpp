@@ -116,9 +116,10 @@ void appDeinit()  {
 static void prepareFrame(int width, int height) {
   glViewport(0, 0, width, height);
 
-  glClearColorx((GLfixed)(0.1f * 65536),
-                (GLfixed)(0.2f * 65536),
-                (GLfixed)(0.3f * 65536), 0x10000);
+//  glClearColorx((GLfixed)(0.1f * 65536),
+//                (GLfixed)(0.2f * 65536),
+//                (GLfixed)(0.3f * 65536), 0x10000);
+  glClearColor(0, 0, 0, 0);
   glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
   glMatrixMode(GL_PROJECTION);

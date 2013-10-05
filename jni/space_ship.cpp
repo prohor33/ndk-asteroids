@@ -11,6 +11,7 @@ SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
   // let it be polygon
   polPointsSize = 4;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
+  // ok, this is counter clockwise order
   polPoints[0] = -size.x()/2; polPoints[1] = -size.y()/2;
   polPoints[2] = size.x()/2; polPoints[3] = -size.y()/2;
   polPoints[4] = size.x()/2; polPoints[5] = size.y()/2;

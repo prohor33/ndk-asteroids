@@ -64,8 +64,6 @@ void PhysicsEngine::computeCollisions() {
         case SpaceObject::OBSTACLE:
           if (intesects(*cii, *cii2)) {
             (*cii)->collide(SpaceObject::OBSTACLE);
-            // new game have started
-            return;
           }
           break;
         }
@@ -77,22 +75,76 @@ void PhysicsEngine::computeCollisions() {
   }
 }
 
-bool PhysicsEngine::intesects(shared_ptr<SpaceObject> o1, shared_ptr<SpaceObject> o2) {
-  shared_ptr<SpaceObject> max_x =
-      o1->getPos().x() > o2->getPos().x() ? o1 : o2;
-  shared_ptr<SpaceObject> min_x =
-      o1->getPos().x() <= o2->getPos().x() ? o1 : o2;
-  shared_ptr<SpaceObject> max_y =
-      o1->getPos().y() > o2->getPos().y() ? o1 : o2;
-  shared_ptr<SpaceObject> min_y =
-      o1->getPos().y() <= o2->getPos().y() ? o1 : o2;
-  if (max_x->getPos().x() - max_x->getSize().x()/2 <
-      min_x->getPos().x() + min_x->getSize().x()/2) {
-    if (max_y->getPos().y() - max_y->getSize().y()/2 <
-          min_y->getPos().y() + min_y->getSize().y()/2) {
-      return true;
-    }
+typedef boost::geometry::model::d2::point_xy<GLfloat> point;
+typedef boost::geometry::model::polygon<point,false, false> b_polygon;
+// counterclockwise order, close
+
+point rotateVector(point p, float angle) {
+  float alpha;
+  float rad;
+  // compute alpha
+  if (p.x() == 0) {
+    if (p.y() > 0)
+      alpha = PI/2;
+    else
+      alpha = -PI/2;
   }
+  else {
+    alpha = atan(p.y() / p.x());
+    if (p.x() < 0)
+      alpha += PI;
+  }
+  alpha += angle;
+  rad = sqrt(p.x()*p.x() + p.y()*p.y());
+  return point(rad * cos(alpha), rad * sin(alpha));
+}
+
+b_polygon createPolygon(shared_ptr<SpaceObject> obj) {
+  b_polygon pol;
+  point p;
+  for (int i=0;i<obj->getPolPointsSize();++i) {
+    p = point(obj->getPolPoints()[2*i], obj->getPolPoints()[2*i+1]);
+    // considering objects rotation
+    p = rotateVector(p, obj->getAngle());
+    pol.outer().push_back(point(p.x() + obj->getPos().x(),
+            p.y() + obj->getPos().y()));
+  }
+  return pol;
+}
+
+bool PhysicsEngine::intesects(shared_ptr<SpaceObject> o1, shared_ptr<SpaceObject> o2) {
+  b_polygon pol1, pol2;
+  point p;
+  pol1 = createPolygon(o1);
+  pol2 = createPolygon(o2);
+
+  std::deque<b_polygon> output;
+  boost::geometry::intersection(pol1, pol2, output);
+
+  if (o1->getObjType() == SpaceObject::SPACE_SHIP && output.size() > 0 && GLogic->debug_flag1) {
+    for (std::deque<b_polygon>::iterator it = output.begin(); it!=output.end(); ++it) {
+      shared_ptr<SpaceObject> obj = shared_ptr<SpaceObject>(new Obstacle());
+      Obstacle* obst = static_cast<Obstacle*>(obj.get());
+      obst->setObstType(Obstacle::PIECE);
+      obst->polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*(*it).outer().size()]);
+      for (int i=0; i<(*it).outer().size(); i++) {
+        __android_log_print(ANDROID_LOG_INFO, "Asteroids", "deq p%i: %f %f",
+            i, (*it).outer()[i].x(), (*it).outer()[i].y());
+        obst->polPoints[2*i] = (*it).outer()[i].x();
+        obst->polPoints[2*i+1] = (*it).outer()[i].y();
+        obj->setVel(Vec2());
+        obj->setPos(Vec2());
+        obj->setAngleVelocity(0);
+        obj->setColor(Color(1, 0, 0, 0));
+        obj->setPolPointsSize((*it).outer().size());
+      }
+      objContainer.push_back(obj);
+    }
+    GLogic->debug_flag1 = false;
+  }
+
+  if (output.size() > 0)
+    return true;
   return false;
 }
 

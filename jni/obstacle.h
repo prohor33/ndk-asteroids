@@ -14,6 +14,7 @@ public:
   void setObstType(ObstType x) { obstType = x; };
   void collide(ObjectType withObj);
   void goTo(Vec2 target_p) {};
+  ObstType getObstType() { return obstType; };
 private:
   ObstType obstType;
 };

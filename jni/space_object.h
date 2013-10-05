@@ -25,11 +25,13 @@ public:
   int getPolPointsSize() { return polPointsSize; };
   const ObjectType& getObjType() { return objType; };
   GLfloat* getPolPoints() { return polPoints.get(); };
-  const Color& getColor() { return color; };
+  Color getColor() { return color; };
   void setColor(Color x) { color = x; };
   virtual void update(float dt);
   virtual void goTo(Vec2 target_p) = 0;
   virtual void collide(ObjectType withObj) = 0;
+  // for debug
+  shared_ptr<GLfloat[]> polPoints;
 protected:
   Vec2 p;
   Vec2 v;
@@ -37,7 +39,6 @@ protected:
   float velocity;
   ObjectType objType;
   bool erasable;
-  shared_ptr<GLfloat[]> polPoints;
   int polPointsSize;
   Color color;
   float angle;
