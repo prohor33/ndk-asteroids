@@ -72,6 +72,7 @@ void _resume()
    * to take care of the pause interval. */
     sDemoStopped = 0;
     sTimeOffset -= _getTime() - sTimeStopped;
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Resumed!");
 }
 
 

@@ -23,9 +23,12 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
   polPoints[0] = 0;
   polPoints[1] = 0;
   int k=1;
+  float start_rand = min_rad + (max_rad-min_rad) * (rand() % 100) / 100.0;
   // this is counterclockwise order too
   for (float alpha = 0; alpha <= 2*PI; alpha+=2*PI/(polPointsSize-2)) {
     rand_rad = min_rad + (max_rad-min_rad) * (rand() % 100) / 100.0;
+    if (alpha == 0 || alpha == 2*PI)
+      rand_rad = start_rand;
     polPoints[k*2] = rand_rad * cos(alpha);
     polPoints[k*2+1] = rand_rad * sin(alpha);
     k++;
@@ -49,6 +52,7 @@ void Obstacle::collide(ObjectType withObj) {
 void Obstacle::blowUp() {
   if (obstType == PIECE)
     return;
+  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "start blowUp()");
   shared_ptr<SpaceObject> obj;
   int k=2;  // because k=0 and k=1 is Vec2(0,0) point
   // and we use [k*2-2] in this loop
@@ -73,7 +77,7 @@ void Obstacle::blowUp() {
     Obstacle* obst = static_cast<Obstacle*>(obj.get());
     obst->setObstType(PIECE);
     // set triangle vertices
-    obst->polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*3]);
+    obst->polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*4]);
     obst->polPoints[0] = 0-delta_p.x();
     obst->polPoints[1] = 0-delta_p.y();
     // we will compute rand_rad in order
@@ -84,8 +88,11 @@ void Obstacle::blowUp() {
     rand_rad = Vec2(polPoints[k*2], polPoints[k*2+1]).length();
     obst->polPoints[4] = rand_rad * cos(angle_now) - delta_p.x();
     obst->polPoints[5] = rand_rad * sin(angle_now) - delta_p.y();
+    // and we should loop the triangle
+    obst->polPoints[6] = obst->polPoints[0];
+    obst->polPoints[7] = obst->polPoints[1];
     // this is triangle
-    obst->setPolPointsSize(3);
+    obst->setPolPointsSize(4);
     obj->setSize(size/2);
     // just keep parent color
     obj->setColor(color);

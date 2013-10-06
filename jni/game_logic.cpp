@@ -57,12 +57,15 @@ void GameLogic::gameOver() {
 
 void GameLogic::setNeedRestart() {
   needRestart = true;
+  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "setNeedRestart()");
 }
 
 void GameLogic::restartGame() {
   needRestart = false;
   DeInitialize();
+  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "DeInitialize end");
   Initialize();
+  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Initialize end");
 }
 
 void GameLogic::MainGameLoop(double dt) {

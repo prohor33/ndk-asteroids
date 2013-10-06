@@ -6,16 +6,35 @@ bool SpaceShip::needReinitializing = false;
 
 SpaceShip::SpaceShip() :
 SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
-    Vec2(), Vec2(20, 30), 50, SpaceObject::SPACE_SHIP),
+    Vec2(), Vec2(20, 25), 50, SpaceObject::SPACE_SHIP),
     deltaFire_t(0), haveTarget(false), dragging(false) {
-  // let it be polygon
-  polPointsSize = 4;
+  // let it be like real spaceship :)
+  polPointsSize = 12;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
+
+  // now, let's draw spaceship =)
+  // i now, this is hardcode, but here we are
+  Vec2 coord[polPointsSize+1];
+  int size_x = 60;
+  int size_y = 77;
+  coord[0] = Vec2(30, 22);
+  coord[1] = Vec2(30, 77);
+  coord[2] = Vec2(20, 67);
+  coord[3] = Vec2(20, 50);
+  coord[4] = Vec2(0, 30);
+  coord[5] = Vec2(0, 0);
+  coord[6] = Vec2(30, 9);
+  coord[7] = Vec2(60, 0);
+  coord[8] = Vec2(60, 30);
+  coord[9] = Vec2(40, 50);
+  coord[10] = Vec2(40, 67);
+  coord[11] = Vec2(30, 77);
   // ok, this is counter clockwise order
-  polPoints[0] = -size.x()/2; polPoints[1] = -size.y()/2;
-  polPoints[2] = size.x()/2; polPoints[3] = -size.y()/2;
-  polPoints[4] = size.x()/2; polPoints[5] = size.y()/2;
-  polPoints[6] = -size.x()/2; polPoints[7] = size.y()/2;
+  for (int i=0; i<polPointsSize; i++) {
+    polPoints[2 * i] = (float)coord[i].x() / size_x * size.x() - size.x()/2;
+    polPoints[2 * i + 1] = (float)coord[i].y() / size_y * size.y() -
+        size.y()/2;;
+  }
   color = Color(0.0f, 0.0f, 1.0f, 0.0f);
 };
 

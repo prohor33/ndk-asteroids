@@ -30,14 +30,14 @@ public:
   virtual void update(float dt);
   virtual void goTo(Vec2 target_p) = 0;
   virtual void collide(ObjectType withObj) = 0;
-  // for debug
   shared_ptr<GLfloat[]> polPoints;
+  // for debug
+  ObjectType objType;
 protected:
   Vec2 p;
   Vec2 v;
   Vec2 size;
   float velocity;
-  ObjectType objType;
   bool erasable;
   int polPointsSize;
   Color color;
