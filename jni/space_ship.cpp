@@ -7,7 +7,8 @@ bool SpaceShip::needReinitializing = false;
 SpaceShip::SpaceShip() :
 SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
     Vec2(), Vec2(20, 25), 50, SpaceObject::SPACE_SHIP),
-    deltaFire_t(0), haveTarget(false), dragging(false) {
+    deltaFire_t(0), haveTarget(false), dragging(false),
+    tripleFire(false) {
   // let it be like real spaceship :)
   polPointsSize = 12;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
@@ -41,16 +42,17 @@ SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
 void SpaceShip::_fire() {
   PEngine->addObject(p+Vec2(0, size.y()/2), Vec2(0, 70), SpaceObject::BULLET);
 
-  if (GLogic->getLevel() == 2) {
+  if (tripleFire) {
     PEngine->addObject(p+Vec2(-size.x()/2, 0), Vec2(0, 70), SpaceObject::BULLET);
     PEngine->addObject(p+Vec2(size.x()/2, 0), Vec2(0, 70), SpaceObject::BULLET);
   }
   return;
 }
 
-void SpaceShip::update(float dt) {
+bool SpaceShip::update(float dt) {
   // firstly we should invoke superclass method
-  this->SpaceObject::update(dt);
+  if (!this->SpaceObject::update(dt))
+    return false;
   deltaFire_t += dt;
   if (deltaFire_t > 0.3f) {
     deltaFire_t = 0;
@@ -65,12 +67,20 @@ void SpaceShip::update(float dt) {
       v = Vec2();
     }
   }
-  return;
+  // check if triple fire is finished
+  if (tripleFire) {
+    deltaTripleFire_t += dt;
+    if (deltaTripleFire_t > 18)
+      tripleFire = false;
+  }
+  return true;
 }
 
 void SpaceShip::collide(ObjectType withObj) {
-  if (withObj == SpaceObject::OBSTACLE) {
+  switch (withObj) {
+  case SpaceObject::OBSTACLE:
     GLogic->gameOver();
+    break;
   }
 }
 
@@ -125,4 +135,9 @@ void SpaceShip::eventHandler(EventType eventType, Vec2 pos) {
     }
     break;
   }
+}
+
+void SpaceShip::tirnOnTripleFire() {
+  tripleFire = true;
+  deltaTripleFire_t = 0;
 }

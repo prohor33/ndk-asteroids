@@ -2,13 +2,14 @@
 #include "space_object.h"
 #include "game_logic.h"
 #include "physics_engine.h"
+#include "space_ship.h"
 
 Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
     Vec2(20, 20), 2, SpaceObject::OBSTACLE),
-    obstType(WHOLE) {
+    obstType(WHOLE), haveBonus(false) {
   p = Vec2(GLogic->getHScrSize().x()*(rand()%100-50)/50.0f,
       GLogic->getHScrSize().y()+10);
-  float v_y[] = { -10, -15, -20 };
+  float v_y[] = { -10, -15, -20, -22, -24 };
   v = Vec2((rand()%100-50)/50.0 * 4.0, (rand()%30+70)/100.0 * v_y[GLogic->getLevel()]);
   // here we generate random polygon
   float size = this->size.x() * (1 + (rand()%100-50)/50.0 * 0.3);
@@ -38,11 +39,12 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
   // generate random obstacles color and angle velocity
   color = Color((rand()%90+10)/100.0, (rand()%90+10)/100.0, (rand()%90+10)/100.0, 0);
   angleVelocity = (rand()%100-50)/50.0 * 0.2;
+  haveBonus = rand()%10 == 0;
 };
 
-void Obstacle::update(float dt) {
+bool Obstacle::update(float dt) {
   // firstly we should invoke superclass method
-  this->SpaceObject::update(dt);
+  return this->SpaceObject::update(dt);
 }
 
 void Obstacle::collide(ObjectType withObj) {
@@ -101,4 +103,50 @@ void Obstacle::blowUp() {
     PEngine->objContainer.push_back(obj);
     k++;
   }
+  if (haveBonus) {
+    PEngine->addObject(p, Vec2(), SpaceObject::BONUS);
+  }
+}
+
+
+Bonus::Bonus(Vec2 p) : SpaceObject (p, Vec2(),
+    Vec2(20, 20), 2, SpaceObject::BONUS),
+    lifeTime_t(0) {
+  polPointsSize = 6;
+  polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
+
+  Vec2 coord[polPointsSize];
+  int half_size_x = 60;
+  int half_size_y = 77;
+  coord[0] = Vec2(0, 0);
+  coord[1] = Vec2(-size.x()/2, -size.y()/2);
+  coord[2] = Vec2(size.x()/2, -size.y()/2);
+  coord[3] = Vec2(size.x()/2, size.y()/2);
+  coord[4] = Vec2(-size.x()/2, size.y()/2);
+  coord[5] = Vec2(-size.x()/2, -size.y()/2);
+  // ok, this is counter clockwise order
+  for (int i=0; i<polPointsSize; i++) {
+    polPoints[2 * i] = (float)coord[i].x();
+    polPoints[2 * i + 1] = (float)coord[i].y();
+  }
+  color = Color(43.0f/255.0f, 194.0f/255.0f, 164.0f/255.0f, 0.0f);
+  angleVelocity = PI;
+}
+
+void Bonus::collide(ObjectType withObj) {
+  switch (withObj) {
+  case SpaceObject::SPACE_SHIP:
+    Ship->tirnOnTripleFire();
+    break;
+  }
+}
+
+bool Bonus::update(float dt) {
+  // firstly we should invoke superclass method
+  if (!this->SpaceObject::update(dt))
+    return false;
+  lifeTime_t += dt;
+  if (lifeTime_t > 15)
+    return false;
+  return true;
 }

@@ -15,7 +15,7 @@ Bullet::Bullet(Vec2 p, Vec2 v) : SpaceObject (p, v, Vec2(6, 6), -1, SpaceObject:
   angleVelocity = 8*PI;
 };
 
-void Bullet::update(float dt) {
+bool Bullet::update(float dt) {
   // firstly we should invoke superclass method
-  this->SpaceObject::update(dt);
+  return this->SpaceObject::update(dt);
 }

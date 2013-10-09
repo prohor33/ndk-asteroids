@@ -53,7 +53,7 @@ private:
   bool needRestart;
   int level;
   int score;
-  static float levelTime[];
+  static float levelEndTime[];
   float timePassed;
 };
 

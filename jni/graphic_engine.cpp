@@ -33,6 +33,7 @@ void GraphicEngine::drawObj(shared_ptr<SpaceObject> obj) {
       first_point = 1;
     break;
   case SpaceObject::SPACE_SHIP:
+  case SpaceObject::BONUS:
     first_point = 1;
     break;
   }

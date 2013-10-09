@@ -16,8 +16,13 @@ void PhysicsEngine::updateGameState(float dt) {
 void PhysicsEngine::update(float dt) {
   vector<shared_ptr<SpaceObject> >::iterator cii;
   objContainer.reserve(std::size_t(objContainer.size()+50));
-  for (cii=objContainer.begin(); cii!=objContainer.end(); ++cii)
-    (*cii)->update(dt);
+  for (cii=objContainer.begin(); cii!=objContainer.end();) {
+    if (!(*cii)->update(dt)) {
+      objContainer.erase(cii);
+      continue;
+    }
+    ++cii;
+  }
   return;
 }
 
@@ -60,7 +65,18 @@ void PhysicsEngine::computeCollisions() {
         // with
         case SpaceObject::OBSTACLE:
           if (intesects(*cii, *cii2)) {
-            (*cii)->collide(SpaceObject::OBSTACLE);
+            (*cii)->collide((*cii2)->getObjType());
+          }
+        }
+        break;
+      case SpaceObject::BONUS:
+        switch ((*cii2)->getObjType()) {
+        // with
+        case SpaceObject::SPACE_SHIP:
+          if (intesects(*cii, *cii2)) {
+            (*cii)->collide((*cii2)->getObjType());
+            objContainer.erase(cii);
+            continue;
           }
           break;
         }
@@ -108,6 +124,7 @@ b_polygon createPolygon(shared_ptr<SpaceObject> obj) {
       i = 1;
     break;
   case SpaceObject::SPACE_SHIP:
+  case SpaceObject::BONUS:
       i = 1;
     break;
   }
@@ -199,12 +216,15 @@ void PhysicsEngine::addObject(Vec2 p, Vec2 v,
   case SpaceObject::SPACE_SHIP:
     objContainer.push_back(shared_ptr<SpaceObject> (Ship));
     break;
+  case SpaceObject::BONUS:
+    objContainer.push_back(shared_ptr<SpaceObject> (new Bonus(p)));
+    break;
   }
 }
 
 void PhysicsEngine::spawnObstacles(float dt) {
   deltaSpawnObstacle_t += dt;
-  float maxDeltaSpawnObstacles[] = { 2.0, 1.5, 1.0 };
+  float maxDeltaSpawnObstacles[] = { 2.0, 1.5, 1.0, 0.8, 0.3 };
   if (deltaSpawnObstacle_t > maxDeltaSpawnObstacles[GLogic->getLevel()]) {
     deltaSpawnObstacle_t = 0;
     // spawn new obstacle

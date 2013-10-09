@@ -8,9 +8,8 @@ class Bullet : public SpaceObject {
 public:
 	Bullet(Vec2 p, Vec2 v);
 	~Bullet() {};
-	void update(float dt);
+	bool update(float dt);
 	void collide(ObjectType withObj) {};
-	void goTo(Vec2 target_p) {};
 private:
 };
 

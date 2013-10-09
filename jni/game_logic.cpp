@@ -5,7 +5,7 @@
 #include "app.h"
 
 // it's level switch time, actually
-float GameLogic::levelTime[] = { 30, 30+30, 30+30+-1 };
+float GameLogic::levelEndTime[] = { 30, 30+30, 30+30+30, 30+30+30+45, 30+30+30+45+-1 };
 
 void GameLogic::Initialize() {
   if (justResume)
@@ -75,8 +75,8 @@ void GameLogic::MainGameLoop(double dt) {
     debug_flag3 = true;
   }
   timePassed += dt;
-  if (timePassed > levelTime[level]) {
-    if (level < 2) {
+  if (timePassed > levelEndTime[level]) {
+    if (level < 3) {
       level++;
       __android_log_print(ANDROID_LOG_INFO, "Asteroids", "level up!");
     }

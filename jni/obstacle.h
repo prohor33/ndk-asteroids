@@ -9,14 +9,23 @@ public:
   enum ObstType { NOT_DEFINED, PIECE, WHOLE };
 	Obstacle();
 	~Obstacle() {};
-  void update(float dt);
+  bool update(float dt);
   void blowUp();
   void setObstType(ObstType x) { obstType = x; };
   void collide(ObjectType withObj);
-  void goTo(Vec2 target_p) {};
   ObstType getObstType() { return obstType; };
 private:
   ObstType obstType;
+  bool haveBonus;
+};
+
+class Bonus : public SpaceObject {
+public:
+  Bonus(Vec2 p);
+  ~Bonus() {};
+  bool update(float dt);
+  void collide(ObjectType withObj);
+  float lifeTime_t;
 };
 
 #endif	/* OBSTACLE_H_ */

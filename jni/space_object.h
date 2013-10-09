@@ -5,7 +5,7 @@
 
 class SpaceObject {
 public:
-  enum ObjectType { NOT_DEFINED, OBSTACLE, BULLET, SPACE_SHIP };
+  enum ObjectType { NOT_DEFINED, OBSTACLE, BULLET, SPACE_SHIP, BONUS };
   SpaceObject(Vec2 p, Vec2 v, Vec2 size, float velocity, ObjectType objType) :
     p(p), v(v), size(size), velocity(velocity), objType(objType),
     angle(0), angleVelocity(0) {};
@@ -25,8 +25,7 @@ public:
   GLfloat* getPolPoints() { return polPoints.get(); };
   Color getColor() { return color; };
   void setColor(Color x) { color = x; };
-  virtual void update(float dt);
-  virtual void goTo(Vec2 target_p) = 0;
+  virtual bool update(float dt);
   virtual void collide(ObjectType withObj) = 0;
   shared_ptr<GLfloat[]> polPoints;
   // for debug

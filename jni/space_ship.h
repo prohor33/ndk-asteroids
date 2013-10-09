@@ -15,13 +15,13 @@ public:
     }
     return &SpaceShip_;
   };
-  void update(float dt);
+  bool update(float dt);
   ~SpaceShip() {};
   void collide(ObjectType withObj);
   void goTo(Vec2 target_p);
   enum EventType { NOT_DEFINED, DOWN, UP, DRAG };
   void eventHandler(EventType eventType, Vec2 pos);
-  //void setNeedReinitializing( bool x ) { needReinitializing = x; };
+  void tirnOnTripleFire();
   static bool needReinitializing;
 private:
   SpaceShip();
@@ -32,6 +32,8 @@ private:
   bool haveTarget;
   bool dragging;
   Vec2 deltaDragging;
+  bool tripleFire;
+  float deltaTripleFire_t;
 };
 
 #define Ship SpaceShip::instance()
