@@ -51,7 +51,6 @@ void PhysicsEngine::computeCollisions() {
         // with
         case SpaceObject::OBSTACLE:
           if (intesects(*cii, *cii2)) {
-            //__android_log_print(ANDROID_LOG_INFO, "Asteroids", "blow upping");
             (*cii2)->collide(SpaceObject::BULLET);
             GLogic->addScore(1);
             eraseFromObjCont(cii, cii2);
@@ -139,66 +138,20 @@ b_polygon createPolygon(shared_ptr<SpaceObject> obj) {
 }
 
 bool PhysicsEngine::intesects(shared_ptr<SpaceObject> o1, shared_ptr<SpaceObject> o2) {
-//  if (o1->getObjType() == SpaceObject::SPACE_SHIP)
-//    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "start intesects()");
   b_polygon pol1, pol2;
   point p;
   pol1 = createPolygon(o1);
   pol2 = createPolygon(o2);
 
-//  if (o1->getObjType() == SpaceObject::SPACE_SHIP)
-//    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "middle intesects()");
-
-  // we have trouble here
   std::deque<b_polygon> output;
   boost::geometry::intersection(pol1, pol2, output);
 
-//  if (o1->getObjType() == SpaceObject::SPACE_SHIP)
-//    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "after intersection()");
-
-  if (o1->getObjType() == SpaceObject::SPACE_SHIP && output.size() > 0 && GLogic->debug_flag1) {
-    for (std::deque<b_polygon>::iterator it = output.begin(); it!=output.end(); ++it) {
-      if ((*it).outer().size() < 3)
-        continue;
-      shared_ptr<SpaceObject> obj = shared_ptr<SpaceObject>(new Obstacle());
-      Obstacle* obst = static_cast<Obstacle*>(obj.get());
-      obj->objType = SpaceObject::NOT_DEFINED;
-      obj->polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*(*it).outer().size()]);
-      for (int i=0; i<(*it).outer().size(); i++) {
-        __android_log_print(ANDROID_LOG_INFO, "Asteroids", "deq p%i: %f %f",
-            i, (*it).outer()[i].x(), (*it).outer()[i].y());
-        obj->polPoints[2*i] = (*it).outer()[i].x();
-        obj->polPoints[2*i+1] = (*it).outer()[i].y();
-        obj->setVel(Vec2());
-        obj->setPos(Vec2());
-        obj->setAngleVelocity(0);
-        obj->setColor(Color(1, 0, 0, 0));
-        obj->setPolPointsSize((*it).outer().size());
-      }
-      objContainer.push_back(obj);
-    }
-
-
-    shared_ptr<SpaceObject> obj = shared_ptr<SpaceObject>(new Obstacle());
-    Obstacle* obst = static_cast<Obstacle*>(obj.get());
-    obj->objType = SpaceObject::NOT_DEFINED;
-    obj->polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*pol2.outer().size()]);
-    for (int i=0; i<pol2.outer().size(); i++) {
-      obj->polPoints[2*i] = pol2.outer()[i].x();
-      obj->polPoints[2*i+1] = pol2.outer()[i].y();
-      obj->setVel(Vec2());
-      obj->setPos(Vec2());
-      obj->setAngleVelocity(0);
-      obj->setColor(Color(1, 1, 1, 0));
-      obj->setPolPointsSize(pol2.outer().size());
-    }
-    objContainer.push_back(obj);
-
-    GLogic->debug_flag1 = false;
+  if (o1->getObjType() == SpaceObject::SPACE_SHIP && output.size() > 0 ) {
+    // let's mark the ship intersection
+    o1->setColor(Color(1, 0, 0, 0));
+    o2->setColor(Color(1, 0, 0, 0));
   }
 
-//  if (o1->getObjType() == SpaceObject::SPACE_SHIP)
-//    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "end intesects()");
   if (output.size() > 0)
     return true;
   return false;

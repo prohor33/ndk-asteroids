@@ -41,7 +41,6 @@ SpaceObject (Vec2(0, -GLogic->getHScrSize().y()+20 ),
 
 void SpaceShip::_fire() {
   PEngine->addObject(p+Vec2(0, size.y()/2), Vec2(0, 70), SpaceObject::BULLET);
-
   if (tripleFire) {
     PEngine->addObject(p+Vec2(-size.x()/2, 0), Vec2(0, 70), SpaceObject::BULLET);
     PEngine->addObject(p+Vec2(size.x()/2, 0), Vec2(0, 70), SpaceObject::BULLET);

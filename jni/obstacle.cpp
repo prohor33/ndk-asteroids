@@ -10,7 +10,8 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
   p = Vec2(GLogic->getHScrSize().x()*(rand()%100-50)/50.0f,
       GLogic->getHScrSize().y()+10);
   float v_y[] = { -10, -15, -20, -22, -24 };
-  v = Vec2((rand()%100-50)/50.0 * 4.0, (rand()%30+70)/100.0 * v_y[GLogic->getLevel()]);
+  v = Vec2((rand()%100-50)/50.0 * 4.0,
+      (rand()%30+70)/100.0 * v_y[GLogic->getLevel()]);
   // here we generate random polygon
   float size = this->size.x() * (1 + (rand()%100-50)/50.0 * 0.3);
   float size_coef = 0.5 + (rand()%100-50)/50.0*0.1;
@@ -37,7 +38,8 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
     alpha+=2*PI/(polPointsSize-2);
   }
   // generate random obstacles color and angle velocity
-  color = Color((rand()%90+10)/100.0, (rand()%90+10)/100.0, (rand()%90+10)/100.0, 0);
+  color = Color((rand()%90+10)/100.0,
+      (rand()%90+10)/100.0, (rand()%90+10)/100.0, 0);
   angleVelocity = (rand()%100-50)/50.0 * 0.2;
   haveBonus = rand()%10 == 0;
 };
@@ -56,7 +58,6 @@ void Obstacle::collide(ObjectType withObj) {
 void Obstacle::blowUp() {
   if (obstType == PIECE)
     return;
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "start blowUp()");
   shared_ptr<SpaceObject> obj;
   int k=2;  // because k=0 and k=1 is Vec2(0,0) point
   // and we use [k*2-2] in this loop
@@ -87,8 +88,10 @@ void Obstacle::blowUp() {
     // we will compute rand_rad in order
     // to get rotate it
     rand_rad = Vec2(polPoints[k*2-2], polPoints[k*2-1]).length();
-    obst->polPoints[2] = rand_rad * cos(angle_now-2*PI/(polPointsSize-2)) - delta_p.x();
-    obst->polPoints[3] = rand_rad * sin(angle_now-2*PI/(polPointsSize-2)) - delta_p.y();
+    obst->polPoints[2] =
+        rand_rad * cos(angle_now-2*PI/(polPointsSize-2)) - delta_p.x();
+    obst->polPoints[3] =
+        rand_rad * sin(angle_now-2*PI/(polPointsSize-2)) - delta_p.y();
     rand_rad = Vec2(polPoints[k*2], polPoints[k*2+1]).length();
     obst->polPoints[4] = rand_rad * cos(angle_now) - delta_p.x();
     obst->polPoints[5] = rand_rad * sin(angle_now) - delta_p.y();

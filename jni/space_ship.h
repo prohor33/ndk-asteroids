@@ -10,7 +10,6 @@ public:
     static SpaceShip SpaceShip_;
     if (needReinitializing) {
       SpaceShip_ = SpaceShip();
-      __android_log_print(ANDROID_LOG_INFO, "Asteroids", "initialize ship");
       needReinitializing = false;
     }
     return &SpaceShip_;

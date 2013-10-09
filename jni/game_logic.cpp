@@ -4,8 +4,9 @@
 #include "space_ship.h"
 #include "app.h"
 
-// it's level switch time, actually
-float GameLogic::levelEndTime[] = { 30, 30+30, 30+30+30, 30+30+30+45, 30+30+30+45+-1 };
+// level switch time
+float GameLogic::levelEndTime[] =
+{ 30, 30+30, 30+30+30, 30+30+30+45, 30+30+30+45+-1 /* never mind */ };
 
 void GameLogic::Initialize() {
   if (justResume)
@@ -26,7 +27,6 @@ void GameLogic::Initialize() {
     paused = false;
   }
   needRestart = false;
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Initialize end");
   return;
 }
 
@@ -44,8 +44,6 @@ void GameLogic::newGame() {
   level = 0;
   score = 0;
   timePassed = 0;
-  debug_flag1 = true;
-  debug_flag2 = true;
 }
 
 void GameLogic::gameOver() {
@@ -57,35 +55,25 @@ void GameLogic::gameOver() {
 
 void GameLogic::setNeedRestart() {
   needRestart = true;
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "setNeedRestart()");
 }
 
 void GameLogic::restartGame() {
   needRestart = false;
   DeInitialize();
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "DeInitialize end");
   Initialize();
-  __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Initialize end");
 }
 
 void GameLogic::MainGameLoop(double dt) {
-  bool debug_flag3 = false;
-  if (needRestart) {
+  if (needRestart)
     restartGame();
-    debug_flag3 = true;
-  }
   timePassed += dt;
   if (timePassed > levelEndTime[level]) {
     if (level < 3) {
+      // level up!
       level++;
-      __android_log_print(ANDROID_LOG_INFO, "Asteroids", "level up!");
     }
   }
   PEngine->updateGameState(dt);
-  if (debug_flag3)
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "updateGameState end");
   Graphic->renderFrame();
-  if (debug_flag3)
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "renderFrame end");
   return;
 }

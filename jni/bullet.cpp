@@ -2,7 +2,7 @@
 #include "game_logic.h"
 
 Bullet::Bullet(Vec2 p, Vec2 v) : SpaceObject (p, v, Vec2(6, 6), -1, SpaceObject::BULLET) {
-  // let it be triangle
+  // let it be a triangle
   polPointsSize = 4;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
   float l = size.x()/2;

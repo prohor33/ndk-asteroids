@@ -13,7 +13,7 @@ void GraphicEngine::renderFrame() {
   return;
 }
 
-// here we decide to draw lines or polygons
+// here we decide whether draw lines or polygons
 #define DRAW_LINES
 
 void GraphicEngine::drawObj(shared_ptr<SpaceObject> obj) {

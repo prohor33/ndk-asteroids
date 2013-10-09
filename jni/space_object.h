@@ -28,8 +28,6 @@ public:
   virtual bool update(float dt);
   virtual void collide(ObjectType withObj) = 0;
   shared_ptr<GLfloat[]> polPoints;
-  // for debug
-  ObjectType objType;
 protected:
   Vec2 p;
   Vec2 v;
@@ -39,6 +37,7 @@ protected:
   Color color;
   float angle;
   float angleVelocity;
+  ObjectType objType;
 };
 
 #endif  /* SPACE_OBJECT_H_ */
