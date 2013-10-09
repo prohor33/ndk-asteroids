@@ -26,20 +26,15 @@ void PhysicsEngine::computeCollisions() {
   vector<shared_ptr<SpaceObject> >::iterator cii2;
   objContainer.reserve(std::size_t(objContainer.size()+50));
   for (cii=objContainer.begin(); cii!=objContainer.end();) {
-    // tracking intersections with borders
-    if ((*cii)->getPos().x() - (*cii)->getSize().x()/2 > GLogic->getHScrSize().x() ||
-        (*cii)->getPos().x() + (*cii)->getSize().x()/2 < -GLogic->getHScrSize().x() ||
-        (*cii)->getPos().y() - (*cii)->getSize().y()/2 > GLogic->getHScrSize().y() ||
-        (*cii)->getPos().y() + (*cii)->getSize().y()/2 < -GLogic->getHScrSize().y()) {
-      if ((*cii)->getErasable() && (*cii)->getObjType() != SpaceObject::SPACE_SHIP) {
-        objContainer.erase(cii);
-        continue;
-      }
+    // tracking objects out of borders
+    if ((*cii)->getPos().x() - (*cii)->getSize().x()*3/2 > GLogic->getHScrSize().x() ||
+        (*cii)->getPos().x() + (*cii)->getSize().x()*3/2 < -GLogic->getHScrSize().x() ||
+        (*cii)->getPos().y() - (*cii)->getSize().y()*3/2 > GLogic->getHScrSize().y() ||
+        (*cii)->getPos().y() + (*cii)->getSize().y()*3/2 < -GLogic->getHScrSize().y()) {
+      objContainer.erase(cii);
+      continue;
     }
-    else {
-      if (!(*cii)->getErasable())
-        (*cii)->setErasable(true);
-    }
+
     for (cii2=objContainer.begin(); cii2!=objContainer.end(); ++cii2) {
       if ((*cii) == (*cii2))
         continue;

@@ -10,31 +10,30 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
       GLogic->getHScrSize().y()+10);
   float v_y[] = { -10, -15, -20 };
   v = Vec2((rand()%100-50)/50.0 * 4.0, (rand()%30+70)/100.0 * v_y[GLogic->getLevel()]);
-  // superclass value
-  erasable = false;
   // here we generate random polygon
-  float size = this->size.x();
-  float size_coef = 0.5;
+  float size = this->size.x() * (1 + (rand()%100-50)/50.0 * 0.3);
+  float size_coef = 0.5 + (rand()%100-50)/50.0*0.1;
   float min_rad = size * (1 - size_coef) / 2;
   float max_rad = size * (1 + size_coef) / 2;
-  polPointsSize = 8; // real quantity of pieces is polPointsSize-2
+  polPointsSize = rand()%3+7; // real quantity of pieces is polPointsSize-2
   float rand_rad;
   polPoints = shared_ptr<GLfloat[]>(new GLfloat[2*polPointsSize]);
   polPoints[0] = 0;
   polPoints[1] = 0;
-  int k=1;
+  float alpha = 0;
   float start_rand = min_rad + (max_rad-min_rad) * (rand() % 100) / 100.0;
   // this is counterclockwise order too
-  for (float alpha = 0; alpha <= 2*PI; alpha+=2*PI/(polPointsSize-2)) {
+  for (int k=1; k <= polPointsSize - 1; k++) {
     rand_rad = min_rad + (max_rad-min_rad) * (rand() % 100) / 100.0;
     // make the polygon to be closed
     // first and last radius must be equal
     if (k == 1 || k == polPointsSize - 1 ) {
       rand_rad = start_rand;
+      alpha = 0;
     }
     polPoints[k*2] = rand_rad * cos(alpha);
     polPoints[k*2+1] = rand_rad * sin(alpha);
-    k++;
+    alpha+=2*PI/(polPointsSize-2);
   }
   // generate random obstacles color and angle velocity
   color = Color((rand()%90+10)/100.0, (rand()%90+10)/100.0, (rand()%90+10)/100.0, 0);

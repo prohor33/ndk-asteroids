@@ -8,7 +8,7 @@ public:
   enum ObjectType { NOT_DEFINED, OBSTACLE, BULLET, SPACE_SHIP };
   SpaceObject(Vec2 p, Vec2 v, Vec2 size, float velocity, ObjectType objType) :
     p(p), v(v), size(size), velocity(velocity), objType(objType),
-    erasable(true), angle(0), angleVelocity(0) {};
+    angle(0), angleVelocity(0) {};
   virtual ~SpaceObject() {};
   void setPos(const Vec2& p) { this->p = p; };
   const Vec2& getPos() { return p; };
@@ -16,8 +16,6 @@ public:
   const Vec2& getVel() { return v; };
   const Vec2& getSize() { return size; };
   void setSize(const Vec2& size) { this->size = size; };
-  void setErasable(bool x) { erasable = x; };
-  bool getErasable() { return erasable; };
   float getAngle() { return angle; };
   void setAngle(float x) { angle = x; };
   void setAngleVelocity(float x) { angleVelocity = x; };
@@ -38,7 +36,6 @@ protected:
   Vec2 v;
   Vec2 size;
   float velocity;
-  bool erasable;
   int polPointsSize;
   Color color;
   float angle;
