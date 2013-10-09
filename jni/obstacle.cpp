@@ -27,8 +27,11 @@ Obstacle::Obstacle() : SpaceObject (Vec2(), Vec2(),
   // this is counterclockwise order too
   for (float alpha = 0; alpha <= 2*PI; alpha+=2*PI/(polPointsSize-2)) {
     rand_rad = min_rad + (max_rad-min_rad) * (rand() % 100) / 100.0;
-    if (alpha == 0 || alpha == 2*PI)
+    // make the polygon to be closed
+    // first and last radius must be equal
+    if (k == 1 || k == polPointsSize - 1 ) {
       rand_rad = start_rand;
+    }
     polPoints[k*2] = rand_rad * cos(alpha);
     polPoints[k*2+1] = rand_rad * sin(alpha);
     k++;
