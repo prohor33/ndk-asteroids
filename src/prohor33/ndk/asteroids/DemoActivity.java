@@ -1,4 +1,4 @@
-package com.example.SanAngeles;
+package prohor33.ndk.asteroids;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

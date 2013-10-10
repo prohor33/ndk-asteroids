@@ -29,7 +29,7 @@ _getTime(void)
 
 /* Call to initialize the graphics state */
 void
-Java_com_example_SanAngeles_DemoRenderer_nativeInit( JNIEnv*  env )
+Java_prohor33_ndk_asteroids_DemoRenderer_nativeInit( JNIEnv*  env )
 {
     appInit();
     __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Init");
@@ -37,7 +37,7 @@ Java_com_example_SanAngeles_DemoRenderer_nativeInit( JNIEnv*  env )
 }
 
 void
-Java_com_example_SanAngeles_DemoRenderer_nativeResize( JNIEnv*  env, jobject  thiz, jint w, jint h )
+Java_prohor33_ndk_asteroids_DemoRenderer_nativeResize( JNIEnv*  env, jobject  thiz, jint w, jint h )
 {
     sWindowWidth  = w;
     sWindowHeight = h;
@@ -47,7 +47,7 @@ Java_com_example_SanAngeles_DemoRenderer_nativeResize( JNIEnv*  env, jobject  th
 
 /* Call to finalize the graphics state */
 void
-Java_com_example_SanAngeles_DemoActivity_nativeDone( JNIEnv*  env )
+Java_prohor33_ndk_asteroids_DemoActivity_nativeDone( JNIEnv*  env )
 {
     appDeinit();
     __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Done");
@@ -77,7 +77,7 @@ void _resume()
 
 
 void
-Java_com_example_SanAngeles_DemoGLSurfaceView_nativeTogglePauseResume( JNIEnv*  env )
+Java_prohor33_ndk_asteroids_DemoGLSurfaceView_nativeTogglePauseResume( JNIEnv*  env )
 {
     sDemoStopped = !sDemoStopped;
     if (sDemoStopped)
@@ -87,7 +87,7 @@ Java_com_example_SanAngeles_DemoGLSurfaceView_nativeTogglePauseResume( JNIEnv*  
 }
 
 void
-Java_com_example_SanAngeles_DemoGLSurfaceView_nativePause( JNIEnv*  env )
+Java_prohor33_ndk_asteroids_DemoGLSurfaceView_nativePause( JNIEnv*  env )
 {
     if (!GLogic->getPaused())
         _pause();
@@ -95,7 +95,7 @@ Java_com_example_SanAngeles_DemoGLSurfaceView_nativePause( JNIEnv*  env )
 }
 
 void
-Java_com_example_SanAngeles_DemoGLSurfaceView_nativeResume( JNIEnv*  env )
+Java_prohor33_ndk_asteroids_DemoGLSurfaceView_nativeResume( JNIEnv*  env )
 {
     if (!GLogic->getPaused())
       _resume();
@@ -103,27 +103,27 @@ Java_com_example_SanAngeles_DemoGLSurfaceView_nativeResume( JNIEnv*  env )
 }
 
 void
-Java_com_example_SanAngeles_DemoGLSurfaceView_nativeTouch( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
+Java_prohor33_ndk_asteroids_DemoGLSurfaceView_nativeTouch( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
 {
     __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Touch x=%f y=%f", x, y);
     appTouch(x, y);
 }
 
 void
-Java_com_example_SanAngeles_DemoGLSurfaceView_nativeMove( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
+Java_prohor33_ndk_asteroids_DemoGLSurfaceView_nativeMove( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
 {
     appMove(x, y);
 }
 
 void
-Java_com_example_SanAngeles_DemoGLSurfaceView_nativeUp( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
+Java_prohor33_ndk_asteroids_DemoGLSurfaceView_nativeUp( JNIEnv*  env, jobject  thiz, jfloat x, jfloat y )
 {
     appUp(x, y);
 }
 
 /* Call to render the next GL frame */
 void
-Java_com_example_SanAngeles_DemoRenderer_nativeRender( JNIEnv*  env )
+Java_prohor33_ndk_asteroids_DemoRenderer_nativeRender( JNIEnv*  env )
 {
     long   curTime;
 

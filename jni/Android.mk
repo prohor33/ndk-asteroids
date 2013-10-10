@@ -6,7 +6,7 @@ LOCAL_MODULE := sanangeles
 
 LOCAL_CFLAGS := -DANDROID_NDK \
                 -DDISABLE_IMPORTGL
-BOOST_LIBRARY := /home/prohor/cots/boost_1_54_0
+BOOST_LIBRARY := jni/boost_1_54_0
 LOCAL_C_INCLUDES += $(BOOST_LIBRARY)
 LOCAL_SRC_FILES := \
     app-android.cpp \

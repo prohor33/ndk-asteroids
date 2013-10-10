@@ -88,8 +88,8 @@ void PhysicsEngine::computeCollisions() {
 }
 
 typedef boost::geometry::model::d2::point_xy<GLfloat> point;
-typedef boost::geometry::model::polygon<point,false, true> b_polygon;
-// "false, true" is counterclockwise order and open polygons
+typedef boost::geometry::model::polygon<point,false, false> b_polygon;
+// "false, false" is counterclockwise order and open polygons
 
 point rotateVector(point p, float angle) {
   float alpha;
