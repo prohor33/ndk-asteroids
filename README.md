@@ -8,8 +8,9 @@
 
 There are two ways of building Android projects.
 
-1. Eclipse
-2. Command Line
+1. Android Studio
+2. Eclipse
+3. Command Line
 
 
 ### Running project from Command Line
