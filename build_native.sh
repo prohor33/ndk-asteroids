@@ -54,11 +54,13 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #COCOS2DX_ROOT="$DIR/../../../.."
 APP_ROOT="$DIR/"
 APP_ANDROID_ROOT="$DIR"
+JNI_FOLDER_PATH="/Users/prohor/Code/ndk-asteroids/app/src/main/jni/"
 
 echo "NDK_ROOT = $NDK_ROOT"
 #echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"
 echo "APP_ROOT = $APP_ROOT"
 echo "APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
+echo "JNI_FOLDER_PATH = $JNI_FOLDER_PATH"
 
 # make sure assets is exist
 if [ -d "$APP_ANDROID_ROOT"/assets ]; then
@@ -96,10 +98,10 @@ fi
 
 if [[ "$buildexternalsfromsource" ]]; then
     echo "Building external dependencies from source"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
+    "$NDK_ROOT"/ndk-build -C "$JNI_FOLDER_PATH" $* \
         "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/source"
 else
     echo "Using prebuilt externals"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
+    "$NDK_ROOT"/ndk-build -C "$JNI_FOLDER_PATH" $* \
         "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
 fi

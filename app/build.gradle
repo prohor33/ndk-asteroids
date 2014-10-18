@@ -1,0 +1,26 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "prohor33.ndk.asteroids"
+        minSdkVersion 10
+        targetSdkVersion 10
+
+        ndk {
+            moduleName "sanangeles"
+            stl "gnustl_static"
+            cFlags "-std=c++11"
+            ldLibs "GLESv1_CM", "dl", "log"
+        }
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
