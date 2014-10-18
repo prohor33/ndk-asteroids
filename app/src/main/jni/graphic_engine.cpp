@@ -29,13 +29,15 @@ void GraphicEngine::drawObj(shared_ptr<SpaceObject> obj) {
   int first_point = 0;
   switch (obj->obj_type()) {
   case SpaceObject::OBSTACLE:
-    // TODO: fix code structure
+    // TODO: fix the code structure
     if (((Obstacle*)(obj.get()))->obstacle_type() == Obstacle::WHOLE)
       first_point = 1;
+//        first_point = 0;
     break;
   case SpaceObject::SPACE_SHIP:
   case SpaceObject::BONUS:
     first_point = 1;
+//    first_point = 0;
     break;
   }
   glVertexPointer(2, GL_FLOAT, 0, obj->GetObjectPointsArray() + first_point * 2);

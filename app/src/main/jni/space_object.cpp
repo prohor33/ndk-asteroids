@@ -14,7 +14,7 @@ float* SpaceObject::GetObjectPointsArray() {
 };
 
 int SpaceObject::GetObjectPointsArraySize() const {
-    return object_points_.size();
+    return object_points_.size() / 2;
 }
 
 void SpaceObject::AddObjectPoint(Vec2 p) {
