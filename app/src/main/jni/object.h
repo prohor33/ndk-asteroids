@@ -13,8 +13,6 @@ public:
     virtual void Collide(class Object* with_obj) = 0;
     virtual void Update(float dt, bool& delete_obj);
     virtual void Draw();
-//    float* GetObjectPointsArray();
-//    int GetObjectPointsArraySize() const;
     Vec2 GetObjectPoint(int i) const;
 
     const Vec2& p() const { return p_; }
@@ -33,6 +31,7 @@ public:
 
 protected:
     void AddObjectPoint(Vec2 p);
+    void DeleteMyself();
     void set_id(int id) { id_ = id; }
 
     Vec2 p_;

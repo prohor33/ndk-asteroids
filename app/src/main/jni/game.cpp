@@ -152,7 +152,7 @@ void Game::SpawnObstacles(float dt) {
     if (spawn_obstacle_dt_ > maxDeltaSpawnObstacles[Game::Instance()->level()]) {
         spawn_obstacle_dt_ = 0;
         // spawn new obstacle
-        obj_container_->AddObject(new Obstacle());
+        obj_container_->AddObject(new Obstacle(Obstacle::COMPOUND));
     }
 }
 

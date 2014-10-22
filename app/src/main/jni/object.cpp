@@ -1,11 +1,16 @@
 #include "object.h"
 #include "graphic.h"
+#include "game.h"
 
 
 Object::Object(ObjectType type, Vec2 p, Vec2 v) :
     type_(type),
     p_(p),
-    v_(v) {};
+    v_(v),
+    angle_(0.0f),
+    angle_velocity_(0.0f),
+    id_(-1)
+    {};
 
 void Object::Update(float dt, bool& delete_obj) {
     p_ += v_ * dt;
@@ -13,14 +18,6 @@ void Object::Update(float dt, bool& delete_obj) {
     if (angle_ > 2.0f * PI)
         angle_ = 0.0f;
 }
-
-//float* Object::GetObjectPointsArray() {
-//    return &object_points_[0];
-//};
-//
-//int Object::GetObjectPointsArraySize() const {
-//    return object_points_.size() / 2;
-//}
 
 void Object::AddObjectPoint(Vec2 p) {
     object_points_.push_back(p);
@@ -36,4 +33,8 @@ Vec2 Object::GetObjectPoint(int i) const {
 
 void Object::Draw() {
     Graphic::DrawPolygon(object_points_array_, p_, angle_, color_);
+}
+
+void Object::DeleteMyself() {
+    Game::Instance()->obj_container()->DeleteObject(id_);
 }

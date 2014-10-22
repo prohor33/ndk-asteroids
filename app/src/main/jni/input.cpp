@@ -19,7 +19,7 @@ void Input::Handle(InputType type, Vec2 p) {
         case DOWN: {
             // check whether it's start of dragging
             Vec2 touch_pos(p.x(), p.y());
-            if (Physics::PointApproxInsidePolygon(touch_pos, ship->object_points(), ship->p())) {
+            if (Physics::PointApproxInsidePolygon(touch_pos, ship)) {
                 dragging_ = true;
                 start_delta_ = ship->p() - p;
                 break;

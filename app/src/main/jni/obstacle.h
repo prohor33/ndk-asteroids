@@ -4,8 +4,8 @@
 
 class Obstacle : public Object {
 public:
-    enum ObstacleType { NOT_DEFINED, PIECE, WHOLE };
-    Obstacle();
+    enum ObstacleType { PIECE, COMPOUND };
+    Obstacle(ObstacleType obstacle_type, Vec2 p = Vec2());
     ~Obstacle() {};
 
     virtual void Update(float dt, bool& delete_obj);
@@ -15,6 +15,8 @@ public:
     void set_obstacle_type(ObstacleType x) { obstacle_type_ = x; };
 
 private:
+    void GenerateCompound();
+
     ObstacleType obstacle_type_;
     bool have_bonus_;
 };

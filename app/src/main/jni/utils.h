@@ -33,4 +33,8 @@ namespace utils {
      };
 
     Vec2 PixelsToNormal(Vec2 pix_p);
+    float RandMinusXtoX(float x = 1.0f);
+    float Rand0toX(float x = 1.0f);
+    bool RandOneOf(int x);
+    Vec2 RotateVector(Vec2 v, float angle);
  }
