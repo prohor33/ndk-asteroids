@@ -12,7 +12,7 @@ LOCAL_SRC_FILES := \
     app-android.cpp \
     bullet.cpp \
     demo.cpp \
-    game_logic.cpp \
+    game.cpp \
     graphic_engine.cpp \
     obstacle.cpp \
     physics_engine.cpp \

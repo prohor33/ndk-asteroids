@@ -1,12 +1,12 @@
 #pragma once
 
-#include "main.h"
-#include "space_object.h"
+#include "object.h"
 
-class Bullet : public SpaceObject {
+class Bullet : public Object {
 public:
 	Bullet(Vec2 p, Vec2 v);
 	~Bullet() {};
-	bool Update(float dt);
-	void Collide(ObjectType with_obj) {};
+
+	virtual void Update(float dt, bool& delete_obj);
+	virtual void Collide(Object* with_obj) {};
 };

@@ -1,9 +1,8 @@
-#include "main.h"
 #include "app.h"
-#include "graphic_engine.h"
-#include "game_logic.h"
-#include "space_ship.h"
-#include "physics_engine.h"
+#include "game.h"
+#include "utils.h"
+#include <GLES/gl.h>
+#include <android/log.h>
 
 static long sStartTick = 0;
 static long sTick = 0;
@@ -100,12 +99,13 @@ static void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
 
 // Called from the app framework.
 void appInit()  {
-  GLogic->Initialize();
+//  Game::Instance()->Initialize();
+    Game::Instance()->New();
 }
 
 // Called from the app framework.
 void appDeinit()  {
-  GLogic->DeInitialize();
+//  Game::Instance()->DeInitialize();
 }
 
 static void prepareFrame(int width, int height) {
@@ -132,41 +132,41 @@ static void prepareFrame(int width, int height) {
  * are the image dimensions to be rendered.
  */
 void appRender (long tick, int width, int height)  {
-  if (sStartTick == 0)
+    if (sStartTick == 0)
+        sStartTick = tick;
+    if (!gAppAlive)
+        return;
+
+    // Actual tick value is "blurred" a little bit.
+    sTick = (sTick + tick - sStartTick) >> 1;
     sStartTick = tick;
-  if (!gAppAlive)
-    return;
 
-  // Actual tick value is "blurred" a little bit.
-  sTick = (sTick + tick - sStartTick) >> 1;
-  sStartTick = tick;
+    // Prepare OpenGL ES for rendering of the frame.
+    prepareFrame(width, height);
 
-  // Prepare OpenGL ES for rendering of the frame.
-  prepareFrame(width, height);
-
-  GLogic->MainGameLoop((double)sTick/1000);
+    Game::Instance()->MainGameLoop((double)sTick / 1000.0f);
 }
 
 void appResize(int width, int height) {
   float aspect = (float)height / width;
-  GLogic->setScreenSizeInPixels(Vec2(width, height));
-  GLogic->setScreenSize(Vec2(100, aspect*100));
+  Game::Instance()->set_screen_size_in_pixels(Vec2(width, height));
+  Game::Instance()->set_screen_size(Vec2(100, aspect * 100));
 }
 
 void appTouch(float x, float y) {
-  if (GLogic->getPaused()) {
-    // should restart
-    // game as soon as possible
-    GLogic->setNeedRestart();
-  }
-  Ship->EventHandler(SpaceShip::DOWN, GLogic->pixCoordToNormal(Vec2(x, y)));
+//  if (Game::Instance()->paused()) {
+//    // should restart
+//    // game as soon as possible
+//    Game::Instance()->setNeedRestart();
+//  }
+  Game::Instance()->input()->Handle(Input::DOWN, utils::PixelsToNormal(Vec2(x, y)));
 }
 
 void appMove(float x, float y) {
-  Ship->EventHandler(SpaceShip::DRAG, GLogic->pixCoordToNormal(Vec2(x, y)));
+  Game::Instance()->input()->Handle(Input::DRAG, utils::PixelsToNormal(Vec2(x, y)));
 }
 
 void appUp(float x, float y) {
-  Ship->EventHandler(SpaceShip::UP, GLogic->pixCoordToNormal(Vec2(x, y)));
+  Game::Instance()->input()->Handle(Input::UP, utils::PixelsToNormal(Vec2(x, y)));
 }
 

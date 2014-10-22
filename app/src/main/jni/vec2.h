@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <math.h>
 
 class Vec2 {
 public:
