@@ -80,25 +80,25 @@ bool CheckOutOfBorders(const Vec2& p) {
 }
 
 void RotateVector(Vec2& p, float angle) {
-  float alpha = 0.0f;
-  // compute alpha
-  if (p.x() == 0) {
-    // vector can be vertical
-    // so dividing by zero will occur
-    if (p.y() > 0)
-      alpha = PI/2;
-    else
-      alpha = -PI/2;
-  }
-  else {
-    alpha = atan(p.y() / p.x());
-    if (p.x() < 0)
-      alpha += PI;
-  }
-  alpha += angle;
-  float rad = sqrt(p.x() * p.x() + p.y() * p.y());
-  p.x() = rad * cos(alpha);
-  p.y() = rad * sin(alpha);
+    float alpha = 0.0f;
+    // compute alpha
+    if (p.x() == 0) {
+        // vector can be vertical
+        // so dividing by zero will occur
+        if (p.y() > 0)
+            alpha = PI/2;
+        else
+            alpha = -PI/2;
+    }
+    else {
+        alpha = atan(p.y() / p.x());
+        if (p.x() < 0)
+            alpha += PI;
+    }
+    alpha += angle;
+    float rad = sqrt(p.x() * p.x() + p.y() * p.y());
+    p.x() = rad * cos(alpha);
+    p.y() = rad * sin(alpha);
 }
 
 }

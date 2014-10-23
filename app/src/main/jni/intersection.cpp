@@ -18,7 +18,7 @@ bool FindLineEquationFromLineSegment(const LineSegment& ls, Line& line) {
 	line.a = v.y() / v.x();
 	line.b = ls.s.y() - line.a * ls.s.x();
 
-	std::cout << "line : y = " << line.a << " * x + " << line.b << std::endl;
+//	std::cout << "line : y = " << line.a << " * x + " << line.b << std::endl;
 	return true;
 }
 
@@ -50,7 +50,7 @@ bool FindIntersectionOfTwoLines(const LineSegment& ls1, const LineSegment& ls2, 
 		res.x() = (line1.b - line2.b) / (line2.a - line1.a);
 		res.y() = line1.a * res.x() + line1.b;
 	}
-	std::cout << "line intersection: " << res << std::endl;
+//	std::cout << "line intersection: " << res << std::endl;
 	return true;
 }
 

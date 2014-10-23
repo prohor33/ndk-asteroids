@@ -99,13 +99,12 @@ static void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
 
 // Called from the app framework.
 void appInit()  {
-//  Game::Instance()->Initialize();
     Game::Instance()->New();
 }
 
 // Called from the app framework.
 void appDeinit()  {
-//  Game::Instance()->DeInitialize();
+    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Deinit");
 }
 
 static void prepareFrame(int width, int height) {
@@ -154,11 +153,6 @@ void appResize(int width, int height) {
 }
 
 void appTouch(float x, float y) {
-//  if (Game::Instance()->paused()) {
-//    // should restart
-//    // game as soon as possible
-//    Game::Instance()->setNeedRestart();
-//  }
   Game::Instance()->input()->Handle(Input::DOWN, utils::PixelsToNormal(Vec2(x, y)));
 }
 
