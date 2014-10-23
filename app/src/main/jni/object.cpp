@@ -1,7 +1,7 @@
 #include "object.h"
 #include "graphic.h"
 #include "game.h"
-
+#include "physics.h"
 
 Object::Object(ObjectType type, Vec2 p, Vec2 v) :
     type_(type),
@@ -37,4 +37,10 @@ void Object::Draw() {
 
 void Object::DeleteMyself() {
     Game::Instance()->obj_container()->DeleteObject(id_);
+}
+
+void Object::GetObjectPointInWorld(Vec2& p, int i) {
+    p = GetObjectPoint(i);
+    physics::RotateVector(p, angle_);
+    p += p_;
 }

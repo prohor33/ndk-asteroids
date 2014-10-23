@@ -74,7 +74,7 @@ Java_prohor33_ndk_asteroids_DemoGLSurfaceView_nativeResume(JNIEnv*  env) {
 void
 Java_prohor33_ndk_asteroids_DemoGLSurfaceView_nativeTouch(JNIEnv*  env, jobject  thiz, jfloat x, jfloat y)
 {
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Touch x=%f y=%f", x, y);
+//    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Touch x=%f y=%f", x, y);
     appTouch(x, y);
 }
 

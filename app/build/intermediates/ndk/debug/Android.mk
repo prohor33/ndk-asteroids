@@ -17,6 +17,7 @@ LOCAL_SRC_FILES := \
 	/Users/prohor/Code/ndk-asteroids/app/src/main/jni/game.cpp \
 	/Users/prohor/Code/ndk-asteroids/app/src/main/jni/graphic.cpp \
 	/Users/prohor/Code/ndk-asteroids/app/src/main/jni/input.cpp \
+	/Users/prohor/Code/ndk-asteroids/app/src/main/jni/intersection.cpp \
 	/Users/prohor/Code/ndk-asteroids/app/src/main/jni/object.cpp \
 	/Users/prohor/Code/ndk-asteroids/app/src/main/jni/obstacle.cpp \
 	/Users/prohor/Code/ndk-asteroids/app/src/main/jni/physics.cpp \

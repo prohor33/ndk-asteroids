@@ -1,11 +1,13 @@
 #include "bullet.h"
 #include "utils.h"
 
-Bullet::Bullet(Vec2 p, Vec2 v) :
-    Object(Object::BULLET, p, v) {
+const float bullet_speed = 70.0f;
+
+Bullet::Bullet(Vec2 p) :
+    Object(Object::BULLET, p, Vec2(0.0f, bullet_speed)) {
 
     // let it be a triangle
-    float l = 5.0f;
+    float l = 4.0f;
     float x_tmp = sqrt(3.0f) * l / 2.0f;
     float y_tmp = l / 2.0f;
 
@@ -20,4 +22,12 @@ Bullet::Bullet(Vec2 p, Vec2 v) :
 
 void Bullet::Update(float dt, bool& delete_obj) {
     this->Object::Update(dt, delete_obj);
+}
+
+void Bullet::Collide(Object* with_obj) {
+    switch (with_obj->type()) {
+    case Object::OBSTACLE:
+        DeleteMyself();
+        break;
+    }
 }

@@ -39,12 +39,12 @@ Ship::Ship() :
 
 void Ship::Fire() {
     // TODO: fix hard code
-    const float fire_shift_x = 10.0f;
+    const float fire_shift_x = 12.0f;
     const float fire_shift_y = 15.0f;
-    Game::Instance()->obj_container()->AddObject(new Bullet(p_ + Vec2(0.0f, fire_shift_y), Vec2(0.0f, 70.0f)));
+    Game::Instance()->obj_container()->AddObject(new Bullet(p_ + Vec2(0.0f, fire_shift_y)));
     if (triple_fire_) {
-        Game::Instance()->obj_container()->AddObject(new Bullet(p_ + Vec2(-fire_shift_x, 0.0f), Vec2(0.0f, 70.0f)));
-        Game::Instance()->obj_container()->AddObject(new Bullet(p_ + Vec2(fire_shift_x / 2.0f, 0.0f), Vec2(0.0f, 70.0f)));
+        Game::Instance()->obj_container()->AddObject(new Bullet(p_ + Vec2(-fire_shift_x, 0.0f)));
+        Game::Instance()->obj_container()->AddObject(new Bullet(p_ + Vec2(fire_shift_x, 0.0f)));
     }
     return;
 }

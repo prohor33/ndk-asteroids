@@ -13,11 +13,14 @@ LOCAL_SRC_FILES := \
     bullet.cpp \
     demo.cpp \
     game.cpp \
-    graphic_engine.cpp \
+    graphic.cpp \
+    input.cpp \
+    intersection.cpp \
+    object.cpp \
     obstacle.cpp \
-    physics_engine.cpp \
-    space_object.cpp \
-    space_ship.cpp \
+    physics.cpp \
+    ship.cpp \
+    utils.cpp \
 
 LOCAL_LDLIBS := -lGLESv1_CM -ldl -llog
 include $(BUILD_SHARED_LIBRARY)

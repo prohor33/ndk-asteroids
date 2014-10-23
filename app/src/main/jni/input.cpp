@@ -19,12 +19,12 @@ void Input::Handle(InputType type, Vec2 p) {
         case DOWN: {
             // check whether it's start of dragging
             Vec2 touch_pos(p.x(), p.y());
-            if (Physics::PointApproxInsidePolygon(touch_pos, ship)) {
+            if (physics::PointApproxInsidePolygon(touch_pos, ship)) {
                 dragging_ = true;
                 start_delta_ = ship->p() - p;
                 break;
             }
-            Physics::PreventOutOfBorders(p, ship->object_points());
+            physics::PreventOutOfBorders(p, ship->object_points());
             ship->GoTo(p);
             break;
         }
@@ -35,7 +35,7 @@ void Input::Handle(InputType type, Vec2 p) {
         case DRAG: {
             if (dragging_) {
                 Vec2 dragging_pos = p + start_delta_;
-                Physics::PreventOutOfBorders(dragging_pos, ship->object_points());
+                physics::PreventOutOfBorders(dragging_pos, ship->object_points());
                 ship->set_p(dragging_pos);
             }
             break;

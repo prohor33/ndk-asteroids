@@ -5,6 +5,7 @@
 #include "app.h"
 #include "object.h"
 #include "obstacle.h"
+#include "intersection.h"
 #include <stdlib.h>
 #include <algorithm>
 #include <android/log.h>
@@ -18,7 +19,6 @@ void ObjContainer::DeleteAllObjects() {
 
 void ObjContainer::DeleteObject(int id) {
     objects_to_delete_.push(id);
-    __android_log_print(ANDROID_LOG_INFO, "Asteroids", "Delete");
 }
 
 void ObjContainer::DoActualDeletion() {
@@ -129,7 +129,8 @@ void Game::UpdateObjects(float dt) {
 void Game::CheckCollisions() {
     for (auto obj1 : obj_container_->objects()) {
         for (auto obj2 : obj_container_->objects()) {
-            bool collision = Physics::CheckCollision(obj1.second.get(), obj2.second.get());
+            bool collision = intersection::CheckObjectIntersection(obj1.second.get(),
+                obj2.second.get());
             if (collision) {
                 obj1.second->Collide(obj2.second.get());
                 obj2.second->Collide(obj1.second.get());
@@ -140,7 +141,7 @@ void Game::CheckCollisions() {
 
 void Game::CheckOutOgBorders() {
     for (auto obj : obj_container_->objects()) {
-        if (Physics::CheckOutOfBorders(obj.second->p()))
+        if (physics::CheckOutOfBorders(obj.second->p()))
             obj_container_->DeleteObject(obj.first);
     }
 }

@@ -17,14 +17,15 @@ Obstacle::Obstacle(ObstacleType obstacle_type, Vec2 p) :
 };
 
 void Obstacle::GenerateCompound() {
+    // random position and velocity
     p_ = Vec2(Game::Instance()->GetHalfScreenSize().x() * (rand() % 100 - 50.0f) / 50.0f,
         Game::Instance()->GetHalfScreenSize().y() + 10.0f);
     float v_y[] = { -10.0f, -15.0f, -20.0f, -22.0f, -24.0f };
     v_ = Vec2(utils::RandMinusXtoX(4.0f),
         (0.7f + utils::Rand0toX(0.3f)) * v_y[Game::Instance()->level()]);
 
-    // here we generate random polygon
-    const float average_obstacle_size = 30.0f;
+    // random polygon
+    const float average_obstacle_size = 10.0f;
     float size = average_obstacle_size * (1.0f + utils::RandMinusXtoX(0.3f));
     float size_ratio = 1.0 + utils::RandMinusXtoX(0.1f);
     const float min_rad = size * size_ratio;
@@ -32,7 +33,7 @@ void Obstacle::GenerateCompound() {
     const int points_quantity = rand() % 3 + 7;
     float start_rand = min_rad + (max_rad-min_rad) * utils::Rand0toX();
 
-    // counterclockwise order
+    // add points (counterclockwise order)
     float alpha = 0;
     for (int k = 0; k < points_quantity; k++) {
         float rand_rad = min_rad + (max_rad - min_rad) * utils::Rand0toX();
@@ -45,7 +46,7 @@ void Obstacle::GenerateCompound() {
         alpha += 2.0f * PI / points_quantity;
     }
 
-    // generate random obstacles color and angle velocity
+    // random color and angle velocity
     color_ = utils::Color(0.1f + utils::Rand0toX(0.9f),
                           0.1f + utils::Rand0toX(0.9f),
                           0.1f + utils::Rand0toX(0.9f), 0.0f);
@@ -62,18 +63,14 @@ void Obstacle::Collide(Object* with_obj) {
     case Object::BULLET:
         if (obstacle_type_ == COMPOUND) {
             BlowUp();
-        } else {
+        } else if (obstacle_type_ == PIECE) {
             DeleteMyself();
         }
         break;
     }
 }
 
-// the most complicated function in that project =)
 void Obstacle::BlowUp() {
-    if (obstacle_type_ == PIECE)
-        return;
-
     // create a bunch of new obstacles (triangles)
     float alpha = 0;
     for (int k = 0; k < (object_points_.size() - 1); k++) {
@@ -111,6 +108,7 @@ void Obstacle::BlowUp() {
     DeleteMyself();
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Bonus::Bonus(Vec2 p) :
     Object(Object::BONUS, p),
@@ -118,7 +116,7 @@ Bonus::Bonus(Vec2 p) :
 
     int half_size_x = 60;
     int half_size_y = 77;
-    // counter clockwise order
+    // add points (counter clockwise order)
     const float size = 30.0f;
     const float half_size = size / 2.0f;
     AddObjectPoint(Vec2(-half_size, -half_size));

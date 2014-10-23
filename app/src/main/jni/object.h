@@ -14,6 +14,7 @@ public:
     virtual void Update(float dt, bool& delete_obj);
     virtual void Draw();
     Vec2 GetObjectPoint(int i) const;
+    void GetObjectPointInWorld(Vec2& p, int i);
 
     const Vec2& p() const { return p_; }
     void set_p(const Vec2& p) { p_ = p; }
