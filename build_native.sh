@@ -54,7 +54,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #COCOS2DX_ROOT="$DIR/../../../.."
 APP_ROOT="$DIR/"
 APP_ANDROID_ROOT="$DIR"
-JNI_FOLDER_PATH="/Users/prohor/Code/ndk-asteroids/app/src/main/jni/"
+JNI_FOLDER_PATH="./app/src/main/jni/"
 
 echo "NDK_ROOT = $NDK_ROOT"
 #echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"
